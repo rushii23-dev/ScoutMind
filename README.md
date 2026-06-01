@@ -86,4 +86,4 @@ The repository comes equipped with Vite for fast local preview:
    * Configure your **Hiring Strategy** in the sidebar (Role, Seniority, Focus areas, and Red Flags).
    * Drag and drop or browse `.pdf` or `.txt` resumes in the upload zone.
    * Click **Execute Intelligent Evaluation** to run the ranking model.
-   * Review results on the **Live Leaderboard** or click individual rows to inspect specific signals.
+   * Review results on the **Live Leaderboard** or click individual rows to inspect specific signals
