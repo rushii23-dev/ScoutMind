@@ -139,15 +139,23 @@ def _generate_random_candidate() -> dict:
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# PDF PARSER
+# FILE PARSER
 # ══════════════════════════════════════════════════════════════════════════════
 
 
-def parse_pdf_bytes(file_bytes: bytes, filename: str) -> str:
+def parse_file_bytes(file_bytes: bytes, filename: str) -> str:
     """
-    Parse PDF content from raw bytes. Falls back to filename-based
-    placeholder text if pypdf is unavailable or parsing fails.
+    Parse content from raw bytes based on file extension.
+    Supports PDF and plain text formats.
     """
+    fn_lower = filename.lower()
+    if fn_lower.endswith(('.txt', '.text', '.md')):
+        try:
+            return file_bytes.decode('utf-8', errors='ignore')
+        except Exception:
+            pass
+
+    # Default to PDF parsing
     try:
         import pypdf
 
@@ -159,7 +167,11 @@ def parse_pdf_bytes(file_bytes: bytes, filename: str) -> str:
                 text += t
         return text
     except Exception:
-        return f"Resume of candidate. Filename details: {filename}"
+        # Fallback to UTF-8 decoding in case the file was text without standard extension
+        try:
+            return file_bytes.decode('utf-8', errors='ignore')
+        except Exception:
+            return f"Resume of candidate. Filename details: {filename}"
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -296,7 +308,7 @@ async def evaluate_candidates(
 
     # ── 1. Parse uploaded files ───────────────────────────────────────────
     for filename, file_bytes in files:
-        _parsed_text = parse_pdf_bytes(file_bytes, filename)
+        _parsed_text = parse_file_bytes(file_bytes, filename)
 
         # Attempt to match filename to a predefined template
         name_clean = filename.lower()

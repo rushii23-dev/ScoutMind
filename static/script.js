@@ -1,76 +1,82 @@
 /**
- * TalentMatch AI — Frontend Controller
- * Rebuilt for Attio-style design matching & three-tier decoupled interface.
+ * TalentMatch AI — Frontend Controller Engine
+ * #21n Architectural Design System — Dynamic State Logic
  */
 
 // ══════════════════════════════════════════════════════════════════════════════
-// 1. GLOBAL ROLE CATALOG — 50 Tech Industry Roles
+// 1. GLOBAL ROLE CATALOG — 50 Live Industry Target Roles
 // ══════════════════════════════════════════════════════════════════════════════
 const ALL_ROLES = [
-  // AI / Data
-  'AI/Machine Learning Engineer',
-  'Data Scientist',
+  'AI & Machine Learning Engineer',
+  'Generative AI Solutions Architect',
+  'Agentic AI Architect',
   'MLOps Engineer',
-  'Data Engineer',
-  'NLP/Vision Specialist',
-  'AI Research Scientist',
-  'Data Analyst',
-  'Business Intelligence Engineer',
-  'Computer Vision Engineer',
-  'Deep Learning Engineer',
-  // Software / Web
-  'Frontend Engineer',
-  'Backend Engineer',
-  'Fullstack Engineer',
-  'Mobile Engineer (iOS/Android)',
-  'React Native Developer',
-  'Embedded Systems Engineer',
-  'Game Developer',
-  'API/Integration Engineer',
-  'Performance Engineer',
-  'Desktop Application Developer',
-  // Cloud / DevOps
-  'DevOps Engineer',
-  'SRE (Site Reliability Engineer)',
-  'Cloud Architect',
-  'Systems/Kernel Engineer',
-  'Platform Engineer',
-  'Infrastructure Engineer',
-  'Release Engineer',
+  'Model Context Protocol (MCP) Integration Engineer',
+  'Deep Learning Specialist',
+  'NLP Engineer',
+  'Data Scientist',
+  'Big Data Pipeline Engineer',
+  'Prompt Optimization Engineer',
+  'LLM Evaluation Specialist',
+  'Backend Systems Engineer',
+  'Frontend UI/UX Architect',
+  'Fullstack Product Engineer',
+  'Mobile iOS Specialist',
+  'Android Systems Engineer',
+  'Embedded Systems Lead',
+  'Distributed Systems Software Engineer',
+  'API & Microservices Architect',
+  'High-Performance Computing Engineer',
+  'Rust Systems Developer',
+  'DevOps Automation Engineer',
+  'Cloud Solutions Infrastructure Architect',
+  'Site Reliability Engineer (SRE)',
+  'Kubernetes Specialist',
+  'Sovereign Cloud Engineer',
+  'Platform Engineering Lead',
+  'Zero Trust Security Architect',
+  'Cloud & AI Security Engineer',
+  'Cyber Threat Analyst',
+  'Data Governance Specialist',
+  'DevSecOps Security Engineer',
+  'Application Penetration Tester',
+  'AI Product Manager',
+  'Technical Program Manager (TPM)',
+  'Engineering Lead',
+  'QA Automation Architect',
+  'GCC Tech Lead',
+  'Enterprise SaaS Solutions Engineer',
+  'IT Project Manager',
+  'Systems Infrastructure Lead',
+  'Infrastructure as Code (IaC) Engineer',
   'Network Engineer',
-  'Database Administrator',
-  'Cloud Security Engineer',
-  // Cyber / Security
-  'Cybersecurity Engineer',
-  'Security Architect',
-  'Penetration Tester',
-  'SOC Analyst',
-  'Application Security Engineer',
-  'Identity & Access Management Engineer',
-  'Threat Intelligence Analyst',
-  'Compliance Engineer',
-  'Cryptography Engineer',
-  'Security Operations Engineer',
-  // Product / Leadership
-  'Product Manager',
-  'Technical Program Manager',
-  'Engineering Manager',
-  'VP of Engineering',
-  'UI/UX Architect',
-  'UI/UX Designer',
-  'QA Automation Engineer',
-  'Scrum Master',
-  'Technical Lead',
-  'CTO/Co-Founder (Technical)',
+  'Core Java Platform Developer',
+  '.NET Cloud Engineer',
+  'C++ Software Engineer',
+  'Computer Vision Developer',
+  'MLOps Security Auditor',
+  'Compliance Analyst',
+  'Solutions Architect',
 ];
 
-// Page detection
+// ══════════════════════════════════════════════════════════════════════════════
+// 2. UTILITY HELPERS
+// ══════════════════════════════════════════════════════════════════════════════
+
+// Page detection flags
 const PAGE = {
   isLanding: document.body.classList.contains('page-landing'),
   isDashboard: document.body.classList.contains('page-dashboard'),
 };
 
-// Populate role select helper
+// Escape HTML strings to prevent XSS
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text || '';
+  return div.innerHTML;
+}
+
+// Populate a <select> dropdown with role options
 function populateRoleSelect(selectEl, defaultRole) {
   if (!selectEl) return;
   selectEl.innerHTML = '';
@@ -83,29 +89,29 @@ function populateRoleSelect(selectEl, defaultRole) {
   });
 }
 
-// Bind search input to role dropdown filter
+// Bind a search input to dynamically filter visible <option> elements
 function bindRoleSearch(searchInput, selectEl) {
   if (!searchInput || !selectEl) return;
   searchInput.addEventListener('input', () => {
-    const query = searchInput.value.toLowerCase();
+    const query = searchInput.value.toLowerCase().trim();
     const options = selectEl.options;
+    let firstVisibleSelected = false;
     for (let i = 0; i < options.length; i++) {
       const text = options[i].textContent.toLowerCase();
-      options[i].hidden = query && !text.includes(query);
+      const match = !query || text.includes(query);
+      options[i].hidden = !match;
+      // Auto-select first visible match to keep dropdown in sync
+      if (match && !firstVisibleSelected) {
+        options[i].selected = true;
+        firstVisibleSelected = true;
+      }
     }
   });
 }
 
-// Escape HTML utility
-function escapeHtml(text) {
-  const div = document.createElement('div');
-  div.textContent = text || '';
-  return div.innerHTML;
-}
-
 
 // ══════════════════════════════════════════════════════════════════════════════
-// 2. PUBLIC LANDING PAGE — Widget Simulation Engine
+// 3. PUBLIC LANDING PAGE — Widget Simulation Engine
 // ══════════════════════════════════════════════════════════════════════════════
 if (PAGE.isLanding) {
   const MOCK_CANDIDATES = [
@@ -151,22 +157,22 @@ if (PAGE.isLanding) {
     }
   ];
 
-  let simRole = 'Frontend Engineer';
+  let simRole = 'Frontend UI/UX Architect';
   let simSeniority = 'Senior';
- 
+
   const demoRoleSelect = document.getElementById('demoRoleSelect');
   const demoRoleSearch = document.getElementById('demoRoleSearch');
   const demoSeniorityPills = document.getElementById('demoSeniorityPills');
   const demoLeaderboard = document.getElementById('demoLeaderboard');
- 
+
   populateRoleSelect(demoRoleSelect, simRole);
   bindRoleSearch(demoRoleSearch, demoRoleSelect);
- 
-  // Render mock rows with shimmer transition
+
+  // Render mock leaderboard with shimmer transition
   function renderSimLeaderboard() {
     if (!demoLeaderboard) return;
- 
-    // Show 4 loading shimmer row placeholders
+
+    // Show shimmer placeholders
     demoLeaderboard.innerHTML = '';
     for (let i = 0; i < 4; i++) {
       const tr = document.createElement('tr');
@@ -174,13 +180,10 @@ if (PAGE.isLanding) {
       tr.innerHTML = `<td colspan="7"></td>`;
       demoLeaderboard.appendChild(tr);
     }
- 
-    // Trigger simulate delay
+
     setTimeout(() => {
-      // Calculate scores dynamically based on simRole & simSeniority
       const scored = MOCK_CANDIDATES.map(cand => {
         let scoreMod = cand.score;
-        // Apply responsive simulation modifiers
         if (simRole.includes('Frontend') || simRole.includes('React') || simRole.includes('Fullstack')) {
           if (cand.skills.includes('React') || cand.skills.includes('TypeScript')) {
             scoreMod = Math.min(100, scoreMod + 5);
@@ -196,7 +199,6 @@ if (PAGE.isLanding) {
             scoreMod = Math.max(40, scoreMod - 10);
           }
         }
- 
         if (simSeniority === 'Junior') {
           scoreMod = Math.round(scoreMod * 0.7);
         } else if (simSeniority === 'Mid') {
@@ -204,20 +206,13 @@ if (PAGE.isLanding) {
         } else if (simSeniority === 'Lead') {
           scoreMod = Math.min(100, scoreMod + 2);
         }
- 
-        // Clamp
-        scoreMod = Math.max(20, Math.min(100, scoreMod));
- 
-        return { ...cand, score: scoreMod };
+        return { ...cand, score: Math.max(20, Math.min(100, scoreMod)) };
       });
 
-      // Sort
       scored.sort((a, b) => b.score - a.score);
 
-      // Render
       demoLeaderboard.innerHTML = '';
       scored.forEach((cand, idx) => {
-        const rank = idx + 1;
         const tr = document.createElement('tr');
         tr.style.opacity = '0';
         tr.style.transform = 'translateY(4px)';
@@ -227,12 +222,10 @@ if (PAGE.isLanding) {
         const cfClass = cand.culture_fit.toLowerCase().replace(/\s/g, '').replace('/', '');
 
         tr.innerHTML = `
-          <td class="col-rank">#${String(rank).padStart(2, '0')}</td>
+          <td class="col-rank">#${String(idx + 1).padStart(2, '0')}</td>
           <td>
             <div class="candidate-cell">
-              <div class="candidate-avatar">
-                <img src="${cand.avatar}" alt="${cand.name}">
-              </div>
+              <div class="candidate-avatar"><img src="${cand.avatar}" alt="${cand.name}"></div>
               <div class="candidate-info">
                 <span class="candidate-name">${cand.name}</span>
                 <span class="candidate-role-sub">${cand.title}</span>
@@ -241,9 +234,7 @@ if (PAGE.isLanding) {
           </td>
           <td class="score-cell">
             <div class="score-bar-container">
-              <div class="score-bar-bg">
-                <div class="score-bar-fill" style="width: ${cand.score}%"></div>
-              </div>
+              <div class="score-bar-bg"><div class="score-bar-fill" style="width: ${cand.score}%"></div></div>
               <span class="score-text">${cand.score}%</span>
             </div>
           </td>
@@ -258,25 +249,22 @@ if (PAGE.isLanding) {
         `;
         demoLeaderboard.appendChild(tr);
 
-        // Fade entry
         requestAnimationFrame(() => {
           setTimeout(() => {
             tr.style.opacity = '1';
             tr.style.transform = 'translateY(0)';
-          }, idx * 60);
+          }, idx * 80);
         });
       });
-    }, 400);
+    }, 450);
   }
 
-  // Bind simulation listeners safely
   if (demoRoleSelect) {
     demoRoleSelect.addEventListener('change', () => {
       simRole = demoRoleSelect.value;
       renderSimLeaderboard();
     });
   }
- 
   if (demoSeniorityPills) {
     demoSeniorityPills.addEventListener('click', (e) => {
       const pill = e.target.closest('.seniority-pill');
@@ -287,20 +275,17 @@ if (PAGE.isLanding) {
       renderSimLeaderboard();
     });
   }
- 
-  // Initial simulation run if table element is present
   if (demoLeaderboard) {
     renderSimLeaderboard();
   }
 
-  // Scroll reveal observer for educational animations in how.html
+  // Scroll reveal observer for how.html animations
   const revealElements = document.querySelectorAll('.scroll-reveal');
   if (revealElements.length > 0) {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('active');
-          // If it's Step 2 (Evaluation), trigger the percentage counter animation
           if (entry.target.id === 'step-evaluation') {
             const matchValEl = document.getElementById('matchValue');
             if (matchValEl && matchValEl.textContent === '0%') {
@@ -310,7 +295,6 @@ if (PAGE.isLanding) {
         }
       });
     }, { threshold: 0.25 });
-
     revealElements.forEach(el => observer.observe(el));
   }
 
@@ -318,13 +302,12 @@ if (PAGE.isLanding) {
     let startTime = null;
     function step(timestamp) {
       if (!startTime) startTime = timestamp;
-      let progress = Math.min((timestamp - startTime) / durationMs, 1);
-      let current = Math.floor(progress * targetValue);
-      el.textContent = current + "%";
+      const progress = Math.min((timestamp - startTime) / durationMs, 1);
+      el.textContent = Math.floor(progress * targetValue) + '%';
       if (progress < 1) {
         window.requestAnimationFrame(step);
       } else {
-        el.textContent = targetValue + "%";
+        el.textContent = targetValue + '%';
       }
     }
     window.requestAnimationFrame(step);
@@ -333,13 +316,13 @@ if (PAGE.isLanding) {
 
 
 // ══════════════════════════════════════════════════════════════════════════════
-// 3. DASHBOARD CONTROLLER — Full Functional Pipeline
+// 4. DASHBOARD CONTROLLER — Full Functional Pipeline
 // ══════════════════════════════════════════════════════════════════════════════
 if (PAGE.isDashboard) {
 
-  // State Management
+  // ── State Management ─────────────────────────────────────────────────────
   const state = {
-    role: 'AI/Machine Learning Engineer',
+    role: 'AI & Machine Learning Engineer',
     seniority: 'Senior',
     selectedSkills: new Set(['Python', 'AWS', 'PyTorch', 'Docker']),
     focusAreas: ['System Scalability', 'Clean Code'],
@@ -350,7 +333,7 @@ if (PAGE.isDashboard) {
     currentSort: 'score',
   };
 
-  // DOM Elements mapping
+  // ── DOM Element Map ──────────────────────────────────────────────────────
   const dom = {
     roleSearch: document.getElementById('roleSearch'),
     roleSelect: document.getElementById('roleSelect'),
@@ -361,23 +344,19 @@ if (PAGE.isDashboard) {
     executeBtn: document.getElementById('executeBtn'),
     activeFilters: document.getElementById('activeFilters'),
     leaderboard: document.getElementById('leaderboard'),
-    
-    // Metrics
+
     metricProcessing: document.getElementById('metricProcessing'),
     metricCost: document.getElementById('metricCost'),
     metricSkill: document.getElementById('metricSkill'),
     metricFlags: document.getElementById('metricFlags'),
     metricFlagsBadge: document.getElementById('metricFlagsBadge'),
-    
-    // Sort Controls
+
     sortButtons: document.querySelectorAll('.sort-button'),
-    
-    // Loading overlay
+
     loadingOverlay: document.getElementById('loadingOverlay'),
     progressFill: document.getElementById('progressFill'),
     loadingText: document.getElementById('loadingText'),
 
-    // Drawer
     drawerBackdrop: document.getElementById('drawerBackdrop'),
     detailDrawer: document.getElementById('detailDrawer'),
     drawerTitle: document.getElementById('drawerTitle'),
@@ -385,16 +364,16 @@ if (PAGE.isDashboard) {
     drawerClose: document.getElementById('drawerClose'),
   };
 
-  // Populate roles dropdown
+  // ── Role Dropdown Init ───────────────────────────────────────────────────
   populateRoleSelect(dom.roleSelect, state.role);
   bindRoleSearch(dom.roleSearch, dom.roleSelect);
 
   dom.roleSelect.addEventListener('change', () => {
     state.role = dom.roleSelect.value;
-    syncCheckboxesToFiltersPanel();
+    syncActiveFilterTags();
   });
 
-  // Experience Seniority Pills Selection
+  // ── Seniority Pill Selection ─────────────────────────────────────────────
   dom.seniorityPills.addEventListener('click', (e) => {
     const pill = e.target.closest('.seniority-pill');
     if (!pill) return;
@@ -403,48 +382,34 @@ if (PAGE.isDashboard) {
     state.seniority = pill.dataset.level;
   });
 
-  // Technical Accordion filters & lists management
-  function updateCheckboxStateFromPillChange(skillName, checked) {
-    const checkbox = document.querySelector(`.tech-checklist input[value="${skillName}"]`);
-    if (checkbox) {
-      checkbox.checked = checked;
-    }
-  }
-
+  // ── Checkbox & Filter Collection ─────────────────────────────────────────
   function collectFilters() {
-    // Collect stack checkbox values
     state.selectedSkills.clear();
-    document.querySelectorAll('.tech-checklist input[type="checkbox"]').forEach(cb => {
-      const section = cb.closest('details');
-      // If it belongs to one of stack filters (Languages, Clouds, Databases)
-      if (section && (section.innerHTML.includes('Languages') || section.innerHTML.includes('Clouds') || section.innerHTML.includes('Databases'))) {
-        if (cb.checked) {
-          state.selectedSkills.add(cb.value);
-        }
+    document.querySelectorAll('.tech-accordion .tech-checklist input[type="checkbox"]').forEach(cb => {
+      if (cb.checked) {
+        state.selectedSkills.add(cb.value);
       }
     });
 
-    // Collect Engineering Focus checkbox values
     state.focusAreas = [];
     ['focus-scalability', 'focus-cleancode', 'focus-cultural'].forEach(id => {
       const el = document.getElementById(id);
       if (el && el.checked) state.focusAreas.push(el.value);
     });
 
-    // Collect Red Flags checkbox values
     state.redFlags = [];
     ['flag-jobhopping', 'flag-keywordstuffing'].forEach(id => {
       const el = document.getElementById(id);
       if (el && el.checked) state.redFlags.push(el.value);
     });
 
-    syncCheckboxesToFiltersPanel();
+    syncActiveFilterTags();
   }
 
-  // Micro-search checklist filter behavior
+  // Micro-search inside accordion panels
   document.querySelectorAll('.tech-micro-search').forEach(searchField => {
     searchField.addEventListener('input', () => {
-      const query = searchField.value.toLowerCase();
+      const query = searchField.value.toLowerCase().trim();
       const listContainer = searchField.nextElementSibling;
       if (!listContainer) return;
       listContainer.querySelectorAll('.tech-check-item').forEach(item => {
@@ -454,45 +419,46 @@ if (PAGE.isDashboard) {
     });
   });
 
-  // Render bottom active filters tags
-  function syncCheckboxesToFiltersPanel() {
+  // ── Active Filter Tags Panel ─────────────────────────────────────────────
+  function syncActiveFilterTags() {
     dom.activeFilters.innerHTML = '';
-    
-    // Add active target role as fixed indicator
+
+    // Role indicator (non-removable)
     const rolePill = document.createElement('span');
     rolePill.className = 'active-tag';
-    rolePill.style.borderColor = 'var(--color-accent-blue)';
-    rolePill.innerHTML = `💼 ${state.role}`;
+    rolePill.style.borderColor = 'var(--color-active-indigo)';
+    rolePill.innerHTML = `💼 ${escapeHtml(state.role)}`;
     dom.activeFilters.appendChild(rolePill);
 
-    // Add active skills tags
+    // Skill tags (removable)
     state.selectedSkills.forEach(skill => {
       const pill = document.createElement('span');
       pill.className = 'active-tag';
-      pill.innerHTML = `${skill} <span class="tag-close" data-skill="${skill}">&times;</span>`;
+      pill.innerHTML = `${escapeHtml(skill)} <span class="tag-close" data-skill="${escapeHtml(skill)}">&times;</span>`;
       dom.activeFilters.appendChild(pill);
     });
   }
 
-  // Handle active filters close button tag click event
   dom.activeFilters.addEventListener('click', (e) => {
     const closeBtn = e.target.closest('.tag-close');
     if (!closeBtn) return;
     const skillName = closeBtn.dataset.skill;
     state.selectedSkills.delete(skillName);
-    updateCheckboxStateFromPillChange(skillName, false);
-    syncCheckboxesToFiltersPanel();
+    // Uncheck the corresponding checkbox
+    const checkbox = document.querySelector(`.tech-checklist input[value="${skillName}"]`);
+    if (checkbox) checkbox.checked = false;
+    syncActiveFilterTags();
   });
 
-  // Bind change events to all sidebar checkboxes to update active tags listing
+  // Bind all sidebar checkboxes to re-collect on change
   document.querySelectorAll('.tech-checklist input[type="checkbox"]').forEach(cb => {
     cb.addEventListener('change', collectFilters);
   });
 
-  // Initial Sync
+  // Initial sync
   collectFilters();
 
-  // ── File Upload List management ──────────────────────────────────────────
+  // ── File Upload Management ───────────────────────────────────────────────
   function addUploadFiles(newFiles) {
     for (const f of newFiles) {
       if (!state.files.some(existing => existing.name === f.name)) {
@@ -516,11 +482,9 @@ if (PAGE.isDashboard) {
       dom.fileList.appendChild(tag);
     });
 
-    if (state.files.length > 0) {
-      dom.uploadZone.style.borderColor = 'var(--color-accent-blue)';
-    } else {
-      dom.uploadZone.style.borderColor = 'var(--color-light-ash)';
-    }
+    dom.uploadZone.style.borderColor = state.files.length > 0
+      ? 'var(--color-active-indigo)'
+      : '';
   }
 
   dom.fileInput.addEventListener('change', (e) => {
@@ -534,10 +498,19 @@ if (PAGE.isDashboard) {
     }
   });
 
-  // Drag-and-drop event bindings
-  dom.uploadZone.addEventListener('dragenter', (e) => { e.preventDefault(); dom.uploadZone.classList.add('drag-over'); });
-  dom.uploadZone.addEventListener('dragover',  (e) => { e.preventDefault(); dom.uploadZone.classList.add('drag-over'); });
-  dom.uploadZone.addEventListener('dragleave', (e) => { e.preventDefault(); dom.uploadZone.classList.remove('drag-over'); });
+  // ── Drag-and-Drop Events ─────────────────────────────────────────────────
+  dom.uploadZone.addEventListener('dragenter', (e) => {
+    e.preventDefault();
+    dom.uploadZone.classList.add('drag-over');
+  });
+  dom.uploadZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dom.uploadZone.classList.add('drag-over');
+  });
+  dom.uploadZone.addEventListener('dragleave', (e) => {
+    e.preventDefault();
+    dom.uploadZone.classList.remove('drag-over');
+  });
   dom.uploadZone.addEventListener('drop', (e) => {
     e.preventDefault();
     dom.uploadZone.classList.remove('drag-over');
@@ -547,19 +520,19 @@ if (PAGE.isDashboard) {
   // ── Execute Evaluation Pipeline ──────────────────────────────────────────
   dom.executeBtn.addEventListener('click', async () => {
     if (state.files.length === 0) {
-      alert("Please upload at least one candidate resume PDF or text file.");
+      alert('Please upload at least one candidate resume PDF or text file.');
       return;
     }
     if (state.isEvaluating) return;
     state.isEvaluating = true;
     dom.executeBtn.disabled = true;
 
-    // Show loading screen progress indicator
+    // Show loading overlay
     dom.loadingOverlay.classList.add('visible');
     dom.progressFill.style.width = '10%';
-    dom.loadingText.textContent = 'Formatting parameters strategy...';
+    dom.loadingText.textContent = 'Formatting strategy parameters...';
 
-    // Synchronize latest configuration states
+    // Collect latest config
     collectFilters();
 
     const config = {
@@ -579,12 +552,17 @@ if (PAGE.isDashboard) {
     const startTime = performance.now();
 
     try {
-      const response = await fetch('/api/evaluate', { method: 'POST', body: formData, credentials: 'same-origin' });
+      const response = await fetch('/api/evaluate', {
+        method: 'POST',
+        body: formData,
+        credentials: 'same-origin',
+      });
+
       dom.progressFill.style.width = '75%';
       dom.loadingText.textContent = 'Analyzing and scoring profiles...';
 
       if (!response.ok) {
-        const err = await response.json().catch(() => ({ detail: 'API error response failed' }));
+        const err = await response.json().catch(() => ({ detail: 'API error' }));
         throw new Error(err.detail || `Server status ${response.status}`);
       }
 
@@ -592,10 +570,9 @@ if (PAGE.isDashboard) {
       const elapsed = ((performance.now() - startTime) / 1000).toFixed(1);
 
       dom.progressFill.style.width = '100%';
-      dom.loadingText.textContent = 'Drawing live metrics...';
-      
-      // Delay slightly for presentation
-      await new Promise(r => setTimeout(r, 200));
+      dom.loadingText.textContent = 'Rendering live metrics...';
+
+      await new Promise(r => setTimeout(r, 250));
 
       state.results = results;
       state.currentSort = 'score';
@@ -604,7 +581,7 @@ if (PAGE.isDashboard) {
       syncSortControls();
 
     } catch (err) {
-      console.error('API Post Execution Failure:', err);
+      console.error('Evaluation Pipeline Error:', err);
       dom.leaderboard.innerHTML = `
         <tr>
           <td colspan="7">
@@ -620,19 +597,19 @@ if (PAGE.isDashboard) {
     }
   });
 
-  // Render metrics KPIs
+  // ── Metrics KPI Update ───────────────────────────────────────────────────
   function updateMetricsKPI(seconds, config) {
     dom.metricProcessing.textContent = `${seconds}s`;
     dom.metricCost.textContent = '$14.2k';
-    
+
     const topSkill = config.tech_stack[0] || 'Python';
     dom.metricSkill.textContent = topSkill;
 
     const density = config.red_flags.length;
     if (density === 0) {
-      dom.metricFlags.textContent = 'Low (0%)';
+      dom.metricFlags.textContent = 'Low (4%)';
       dom.metricFlagsBadge.className = 'analytics-badge green';
-      dom.metricFlagsBadge.textContent = 'Low';
+      dom.metricFlagsBadge.innerHTML = '<span class="status-node"></span> Low';
     } else if (density === 1) {
       dom.metricFlags.textContent = 'Med (12%)';
       dom.metricFlagsBadge.className = 'analytics-badge gray';
@@ -644,14 +621,15 @@ if (PAGE.isDashboard) {
     }
   }
 
-  // Render leaderboard rows
+  // ── Leaderboard Row Rendering ────────────────────────────────────────────
   function renderLeaderboardRows(results) {
     dom.leaderboard.innerHTML = '';
+
     if (!results || results.length === 0) {
       dom.leaderboard.innerHTML = `
         <tr>
           <td colspan="7">
-            <div class="leaderboard-empty">No matching candidates could be fetched.</div>
+            <div class="leaderboard-empty">No matching candidates could be evaluated.</div>
           </td>
         </tr>`;
       return;
@@ -660,18 +638,19 @@ if (PAGE.isDashboard) {
     results.forEach((cand, idx) => {
       const rank = idx + 1;
       const tr = document.createElement('tr');
-      tr.dataset.idx = idx; // Store data index for drawer modal
+      tr.dataset.idx = idx;
       tr.style.cursor = 'pointer';
 
-      // Load matching classes for badges
+      // Badge CSS class derivation
       const tdClass = cand.tech_depth.toLowerCase();
       const cfClass = cand.culture_fit.toLowerCase().replace(/\s/g, '').replace('/', '');
 
-      // Profile avatar mockup generator
-      let avatarUrl = 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=100'; // Default male
-      if (cand.name.includes('Elena') || cand.name.includes('Sarah') || cand.name.includes('Sofia') || cand.name.includes('Olivia') || cand.name.includes('Sophia')) {
-        avatarUrl = 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=100'; // Female
-      } else if (cand.name.includes('Julian') || cand.name.includes('Alex') || cand.name.includes('Chen') || cand.name.includes('Liam')) {
+      // Avatar selection by name heuristic
+      let avatarUrl = 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=100';
+      const nameLower = cand.name.toLowerCase();
+      if (['elena', 'sarah', 'sofia', 'olivia', 'sophia', 'anna', 'maria', 'nina', 'lisa', 'emma'].some(n => nameLower.includes(n))) {
+        avatarUrl = 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=100';
+      } else if (['julian', 'alex', 'chen', 'liam', 'omar', 'raj', 'david', 'james', 'max'].some(n => nameLower.includes(n))) {
         avatarUrl = 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&q=80&w=100';
       }
 
@@ -696,75 +675,87 @@ if (PAGE.isDashboard) {
             <span class="score-text">${cand.score}%</span>
           </div>
         </td>
-        <td><span class="tech-badge ${tdClass}">${cand.tech_depth}</span></td>
-        <td><span class="culture-badge ${cfClass}">${cand.culture_fit}</span></td>
+        <td><span class="tech-badge ${tdClass}">${escapeHtml(cand.tech_depth)}</span></td>
+        <td><span class="culture-badge ${cfClass}">${escapeHtml(cand.culture_fit)}</span></td>
         <td class="col-justification">"${escapeHtml(cand.why_fit)}"</td>
         <td class="col-tags">
           <div class="row-tags-wrapper">
-            ${(cand.skills || []).slice(0, 4).map(s => `<span class="row-tag">${s}</span>`).join('')}
+            ${(cand.skills || []).slice(0, 5).map(s => `<span class="row-tag">${escapeHtml(s)}</span>`).join('')}
           </div>
         </td>
       `;
 
-      // Drawer details inspector click trigger
+      // Row click → open detail drawer
       tr.addEventListener('click', () => {
         openCandidateDetailsDrawer(cand, avatarUrl);
       });
 
+      // Staggered entry animation
+      tr.style.opacity = '0';
+      tr.style.transform = 'translateY(6px)';
+      tr.style.transition = 'all 0.35s cubic-bezier(0.16, 1, 0.3, 1)';
+
       dom.leaderboard.appendChild(tr);
+
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          tr.style.opacity = '1';
+          tr.style.transform = 'translateY(0)';
+        }, idx * 60);
+      });
     });
   }
 
-  // Profile Inspector Detail Drawer
+  // ── Candidate Detail Drawer ──────────────────────────────────────────────
   function openCandidateDetailsDrawer(candidate, avatar) {
     dom.drawerTitle.textContent = candidate.name;
-    
+
     dom.drawerBody.innerHTML = `
-      <div style="display: flex; align-items: center; gap: 15px;">
+      <div style="display: flex; align-items: center; gap: 16px;">
         <div class="candidate-avatar" style="width: 64px; height: 64px;">
-          <img src="${avatar}" alt="${candidate.name}" style="width: 100%; height: 100%;">
+          <img src="${avatar}" alt="${escapeHtml(candidate.name)}" style="width: 100%; height: 100%;">
         </div>
-        <div style="display: flex; flex-direction: column;">
-          <h3 style="font-size: 18px; font-weight: 700;">${candidate.name}</h3>
-          <span style="font-size: 13px; color: var(--color-graphite);">${candidate.title}</span>
+        <div style="display: flex; flex-direction: column; gap: 2px;">
+          <h3 style="font-size: 20px; font-weight: 700; color: var(--color-deep-charcoal);">${escapeHtml(candidate.name)}</h3>
+          <span style="font-size: 14px; color: var(--color-muted-graphite);">${escapeHtml(candidate.title)}</span>
         </div>
       </div>
 
       <div class="drawer-section">
         <label class="sidebar-label">Strategy Fit Score</label>
-        <div class="score-bar-container" style="margin-top: 5px;">
-          <div class="score-bar-bg" style="width: 150px; height: 8px;">
+        <div class="score-bar-container" style="margin-top: 6px;">
+          <div class="score-bar-bg" style="width: 160px; height: 8px;">
             <div class="score-bar-fill" style="width: ${candidate.score}%"></div>
           </div>
-          <strong style="font-size: 15px; color: var(--color-accent-blue);">${candidate.score}% Overall Fit</strong>
+          <strong style="font-size: 16px; color: var(--color-active-indigo);">${candidate.score}% Overall Fit</strong>
         </div>
       </div>
 
       <div class="drawer-section">
         <label class="sidebar-label">Signal Assessments</label>
-        <div style="display: flex; gap: 10px; margin-top: 5px;">
+        <div style="display: flex; gap: 16px; margin-top: 6px;">
           <div>
-            <span class="sidebar-label" style="font-size: 10px; display: block; margin-bottom: 2px;">Tech Depth</span>
-            <span class="tech-badge ${candidate.tech_depth.toLowerCase()}">${candidate.tech_depth}</span>
+            <span class="sidebar-label" style="font-size: 11px; display: block; margin-bottom: 4px;">Tech Depth</span>
+            <span class="tech-badge ${candidate.tech_depth.toLowerCase()}">${escapeHtml(candidate.tech_depth)}</span>
           </div>
           <div>
-            <span class="sidebar-label" style="font-size: 10px; display: block; margin-bottom: 2px;">Culture Alignment</span>
-            <span class="culture-badge ${candidate.culture_fit.toLowerCase().replace(/\s/g, '').replace('/', '')}">${candidate.culture_fit}</span>
+            <span class="sidebar-label" style="font-size: 11px; display: block; margin-bottom: 4px;">Culture Alignment</span>
+            <span class="culture-badge ${candidate.culture_fit.toLowerCase().replace(/\s/g, '').replace('/', '')}">${escapeHtml(candidate.culture_fit)}</span>
           </div>
         </div>
       </div>
 
       <div class="drawer-section">
         <label class="sidebar-label">Pipeline Justification</label>
-        <p style="font-size: 13px; color: var(--color-graphite); font-style: italic; margin-top: 5px; line-height: 1.5;">
-          "${candidate.why_fit}"
+        <p style="font-size: 15px; color: var(--color-muted-graphite); font-style: italic; margin-top: 6px; line-height: 1.6;">
+          "${escapeHtml(candidate.why_fit)}"
         </p>
       </div>
 
       <div class="drawer-section">
         <label class="sidebar-label">Extracted Skill Keywords</label>
-        <div class="row-tags-wrapper" style="margin-top: 8px; gap: 6px;">
-          ${(candidate.skills || []).map(s => `<span class="row-tag" style="font-size: 12px; padding: 3px 10px;">${s}</span>`).join('')}
+        <div class="row-tags-wrapper" style="margin-top: 8px; gap: 8px;">
+          ${(candidate.skills || []).map(s => `<span class="row-tag" style="font-size: 13px; padding: 5px 12px;">${escapeHtml(s)}</span>`).join('')}
         </div>
       </div>
     `;
@@ -781,13 +772,13 @@ if (PAGE.isDashboard) {
   dom.drawerClose.addEventListener('click', closeCandidateDrawer);
   dom.drawerBackdrop.addEventListener('click', closeCandidateDrawer);
 
-  // Sorting columns triggers
+  // ── Sorting Controls ─────────────────────────────────────────────────────
   dom.sortButtons.forEach(btn => {
     btn.addEventListener('click', () => {
       if (!state.results) return;
       state.currentSort = btn.dataset.sort;
       syncSortControls();
-      
+
       const sorted = [...state.results];
       if (state.currentSort === 'score') {
         sorted.sort((a, b) => b.score - a.score);
@@ -807,14 +798,18 @@ if (PAGE.isDashboard) {
     });
   }
 
-  // Omni-search input filter behavior
+  // ── Omni-Search Filter ───────────────────────────────────────────────────
   const omniSearch = document.getElementById('omniSearch');
   if (omniSearch) {
     omniSearch.addEventListener('input', () => {
       if (!state.results) return;
-      const query = omniSearch.value.toLowerCase();
+      const query = omniSearch.value.toLowerCase().trim();
+      if (!query) {
+        renderLeaderboardRows(state.results);
+        return;
+      }
       const filtered = state.results.filter(cand => {
-        return cand.name.toLowerCase().includes(query) || 
+        return cand.name.toLowerCase().includes(query) ||
                cand.title.toLowerCase().includes(query) ||
                (cand.skills || []).some(s => s.toLowerCase().includes(query));
       });
@@ -822,7 +817,7 @@ if (PAGE.isDashboard) {
     });
   }
 
-  // ── Initial Pre-Population Setup ─────────────────────────────────────────
+  // ── Initial Setup ────────────────────────────────────────────────────────
   document.addEventListener('DOMContentLoaded', () => {
     collectFilters();
   });
