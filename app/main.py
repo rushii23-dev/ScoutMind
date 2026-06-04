@@ -1,5 +1,5 @@
 """
-TalentMatch AI — FastAPI Application Server
+ScoutMind — FastAPI Application Server
 Multi-page routing: Landing → Login → Dashboard
 Active API endpoint gated to dashboard context.
 """
@@ -19,7 +19,7 @@ from .pipeline import evaluate_candidates
 # ══════════════════════════════════════════════════════════════════════════════
 
 app = FastAPI(
-    title="TalentMatch AI",
+    title="ScoutMind",
     description="Intelligent recruiter dashboard — API backend",
     version="2.0.0",
 )

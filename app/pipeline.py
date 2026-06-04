@@ -1,5 +1,5 @@
 """
-TalentMatch AI — Core Evaluation Pipeline (Async)
+ScoutMind — Core Evaluation Pipeline (Async)
 Refactored from the original synchronous Streamlit pipeline into an async
 FastAPI-compatible scoring engine. All scoring logic is preserved identically.
 """

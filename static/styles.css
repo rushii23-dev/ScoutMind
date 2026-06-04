@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   TalentMatch AI — #21n Architectural Design System
+   ScoutMind — #21n Architectural Design System
    Pure flat borders. Zero shadows. Zero gradients. Desktop-density scales.
    ═══════════════════════════════════════════════════════════════════════════ */
 
@@ -24,11 +24,19 @@
 
   /* ── Typography ─────────────────────────────────────────────────────────── */
   --font-main: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  
+  /* Micro-adjusted values for compact SaaS viewport fitting */
+  --text-heading-lg: 18px;      /* Main section headers like "Live Ranking Leaderboard" */
+  --text-heading: 15px;         /* Group headers like "$ Hiring Strategy" */
+  --text-heading-sm: 11px;      /* Capitalized tracking labels like "TARGET ROLE" */
+  --text-body: 13px;            /* Dropdowns, forms, select input text, and tree items */
+  --text-body-sm: 12px;         /* Supporting annotations and checkbox text */
+  --text-caption: 10px;         /* Table headers and status tags */
 
   /* ── Spatial Layout Constants ────────────────────────────────────────────── */
-  --dock-width: 64px;
-  --sidebar-width: 280px;
-  --canvas-offset: 344px; /* dock + sidebar */
+  --dock-width: 56px;
+  --sidebar-width: 252px;
+  --canvas-offset: 308px; /* dock + sidebar (56 + 252) */
 
   /* ── Corner Radii ───────────────────────────────────────────────────────── */
   --radius-card: 12px;
@@ -51,7 +59,7 @@
 html {
   height: 100%;
   width: 100%;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 body {
@@ -64,7 +72,7 @@ body {
   height: 100%;
   width: 100%;
   overflow-x: hidden;
-  font-size: 16px;
+  font-size: 14px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -111,14 +119,14 @@ a:hover {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 14px 32px;
+  gap: 6px;
+  padding: 7px 16px;
   background-color: var(--color-active-indigo);
   color: #ffffff;
   border: 1px solid var(--color-active-indigo);
   border-radius: var(--radius-button);
   font-weight: 600;
-  font-size: 16px;
+  font-size: 13px;
   cursor: pointer;
   white-space: nowrap;
   transition: var(--transition-bezier);
@@ -144,13 +152,13 @@ a:hover {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  padding: 14px 32px;
+  padding: 7px 16px;
   background-color: var(--color-cloud-white);
   color: var(--color-deep-charcoal);
   border: 1px solid var(--color-light-ash);
   border-radius: var(--radius-button);
   font-weight: 600;
-  font-size: 16px;
+  font-size: 13px;
   cursor: pointer;
   transition: var(--transition-bezier);
 }
@@ -177,7 +185,7 @@ a:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 24px 0;
+  padding: 18px 0;
   z-index: 100;
 }
 
@@ -185,7 +193,7 @@ a:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 24px;
+  gap: 18px;
   width: 100%;
 }
 
@@ -193,12 +201,12 @@ a:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   border-radius: var(--radius-tag);
   background-color: var(--color-faint-fog);
   border: 1px solid var(--color-light-ash);
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 700;
   color: var(--color-active-indigo);
   cursor: pointer;
@@ -221,9 +229,9 @@ a:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
+  width: 34px;
+  height: 34px;
+  border-radius: 7px;
   color: var(--color-muted-graphite);
   cursor: pointer;
   transition: var(--transition-bezier);
@@ -234,8 +242,8 @@ a:hover {
   background-color: var(--color-polar-mist);
 }
 .dock-item svg {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   fill: none;
   stroke: currentColor;
   stroke-width: 1.75;
@@ -255,12 +263,12 @@ a:hover {
   height: 100dvh;
   background-color: var(--color-faint-fog);
   border-right: 1px solid var(--color-light-ash);
-  padding: 28px 24px;
+  padding: 20px 18px;
   overflow-y: auto;
   z-index: 90;
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 20px;
 }
 .sidebar-filters::-webkit-scrollbar {
   width: 3px;
@@ -277,22 +285,22 @@ a:hover {
   gap: 4px;
 }
 .sidebar-title {
-  font-size: 22px;
+  font-size: 16px;
   font-weight: 700;
   color: var(--color-deep-charcoal);
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 .sidebar-title svg {
-  width: 18px;
-  height: 18px;
+  width: 15px;
+  height: 15px;
   stroke: currentColor;
   fill: none;
   stroke-width: 2;
 }
 .sidebar-caption {
-  font-size: 14px;
+  font-size: 12px;
   color: var(--color-muted-graphite);
   font-weight: 500;
 }
@@ -301,14 +309,14 @@ a:hover {
 .sidebar-section {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 .sidebar-label {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--color-deep-charcoal);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-muted-graphite);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
 }
 
 /* ── Role Selector ────────────────────────────────────────────────────────── */
@@ -326,8 +334,7 @@ a:hover {
   border: 1px solid var(--color-light-ash);
   border-radius: var(--radius-tag);
   background-color: var(--color-cloud-white);
-  padding: 0 16px;
-  height: 44px;
+  padding: 7px 12px;
   transition: var(--transition-bezier);
 }
 .role-search-wrapper:focus-within {
@@ -346,18 +353,17 @@ a:hover {
   border: none;
   background: transparent;
   width: 100%;
-  font-size: 15px;
+  font-size: var(--text-body, 14px);
   color: var(--color-deep-charcoal);
-  padding: 12px 0;
+  padding: 0;
 }
 
 .role-dropdown {
   width: 100%;
-  height: 44px;
   border: 1px solid var(--color-light-ash);
   border-radius: var(--radius-tag);
-  padding: 12px 16px;
-  font-size: 16px;
+  padding: 7px 12px;
+  font-size: var(--text-body, 13px);
   background-color: var(--color-cloud-white);
   color: var(--color-deep-charcoal);
   cursor: pointer;
@@ -380,8 +386,8 @@ a:hover {
   border: 1px solid var(--color-light-ash);
   background-color: var(--color-cloud-white);
   color: var(--color-deep-charcoal);
-  padding: 10px 16px;
-  font-size: 14px;
+  padding: 5px 8px;
+  font-size: var(--text-body-sm, 12px);
   font-weight: 600;
   border-radius: var(--radius-button);
   cursor: pointer;
@@ -412,8 +418,8 @@ a:hover {
 }
 .tech-group summary {
   list-style: none;
-  padding: 12px 14px;
-  font-size: 15px;
+  padding: 8px 12px;
+  font-size: 13px;
   font-weight: 600;
   color: var(--color-deep-charcoal);
   cursor: pointer;
@@ -438,21 +444,21 @@ a:hover {
 }
 
 .tech-content {
-  padding: 12px;
+  padding: 10px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
   border-top: 1px solid var(--color-light-ash);
-  max-height: 220px;
+  max-height: 200px;
   overflow-y: auto;
 }
 .tech-micro-search {
-  height: 38px;
+  height: 32px;
   border: 1px solid var(--color-light-ash);
   border-radius: 6px;
   background-color: var(--color-cloud-white);
-  padding: 8px 12px;
-  font-size: 15px;
+  padding: 6px 10px;
+  font-size: 12px;
   width: 100%;
   color: var(--color-deep-charcoal);
   transition: var(--transition-bezier);
@@ -465,13 +471,13 @@ a:hover {
 .tech-checklist {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
 }
 .tech-check-item {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 15px;
+  gap: 8px;
+  font-size: var(--text-body-sm, 12px);
   color: var(--color-deep-charcoal);
   cursor: pointer;
   transition: var(--transition-bezier);
@@ -480,8 +486,8 @@ a:hover {
   color: var(--color-active-indigo);
 }
 .tech-check-item input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   accent-color: var(--color-active-indigo);
   cursor: pointer;
   flex-shrink: 0;
@@ -535,8 +541,8 @@ a:hover {
   background-color: var(--color-cloud-white);
   display: flex;
   flex-direction: column;
-  padding: 32px 44px;
-  gap: 28px;
+  padding: 22px 32px;
+  gap: 20px;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -547,8 +553,8 @@ a:hover {
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid var(--color-light-ash);
-  padding-bottom: 16px;
-  gap: 16px;
+  padding-bottom: 12px;
+  gap: 12px;
 }
 .subnav-left {
   display: flex;
@@ -558,8 +564,8 @@ a:hover {
 .workspace-selector {
   border: 1px solid var(--color-light-ash);
   border-radius: var(--radius-tag);
-  padding: 10px 18px;
-  font-size: 15px;
+  padding: 7px 14px;
+  font-size: 13px;
   font-weight: 600;
   background-color: var(--color-faint-fog);
   color: var(--color-deep-charcoal);
@@ -577,14 +583,14 @@ a:hover {
   border: 1px solid var(--color-light-ash);
   border-radius: var(--radius-tag);
   padding: 0 16px;
-  height: 44px;
-  width: 280px;
+  height: 36px;
+  width: 260px;
   background-color: var(--color-cloud-white);
   transition: var(--transition-bezier);
 }
 .omni-search-wrapper:focus-within {
   border-color: var(--color-active-indigo);
-  width: 380px;
+  width: 340px;
 }
 .omni-search-wrapper svg {
   width: 16px;
@@ -599,7 +605,7 @@ a:hover {
   border: none;
   background: transparent;
   width: 100%;
-  font-size: 15px;
+  font-size: 13px;
   color: var(--color-deep-charcoal);
 }
 
@@ -608,8 +614,8 @@ a:hover {
   gap: 4px;
 }
 .subnav-tab {
-  padding: 10px 20px;
-  font-size: 14px;
+  padding: 6px 14px;
+  font-size: 12px;
   font-weight: 500;
   color: var(--color-muted-graphite);
   border-radius: var(--radius-button);
@@ -636,13 +642,13 @@ a:hover {
   align-items: center;
   justify-content: center;
   text-align: center;
-  border: 2.5px dashed var(--color-light-ash);
+  border: 2px dashed var(--color-light-ash);
   border-radius: var(--radius-card);
-  padding: 56px 48px;
+  padding: 32px 36px;
   background-color: var(--color-faint-fog);
   transition: var(--transition-bezier);
   cursor: pointer;
-  min-height: 280px;
+  min-height: 180px;
   width: 100%;
 }
 .upload-zone.drag-over {
@@ -651,32 +657,32 @@ a:hover {
 }
 
 .upload-icon-container {
-  margin-bottom: 16px;
+  margin-bottom: 10px;
   color: var(--color-muted-graphite);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .upload-icon-container svg {
-  width: 48px;
-  height: 48px;
+  width: 36px;
+  height: 36px;
   fill: none;
   stroke: currentColor;
   stroke-width: 1.5;
 }
 
 .upload-title {
-  font-size: 22px;
-  font-weight: 700;
+  font-size: 15px;
+  font-weight: 600;
   color: var(--color-deep-charcoal);
-  margin-bottom: 10px;
+  margin-bottom: 6px;
   line-height: 1.3;
 }
 .upload-caption {
-  font-size: 15px;
+  font-size: var(--text-body-sm, 12px);
   color: var(--color-muted-graphite);
   font-weight: 500;
-  margin-bottom: 28px;
+  margin-bottom: 18px;
 }
 
 .upload-actions-row {
@@ -723,31 +729,31 @@ a:hover {
 .analytics-matrix {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+  gap: 14px;
   width: 100%;
 }
 .analytics-card {
   border: 1px solid var(--color-light-ash);
   border-radius: var(--radius-card);
   background-color: var(--color-faint-fog);
-  padding: 24px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 6px;
 }
 .analytics-label {
-  font-size: 13px;
-  font-weight: 700;
+  font-size: 11px;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--color-muted-graphite);
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 .analytics-label svg {
-  width: 14px;
-  height: 14px;
+  width: 12px;
+  height: 12px;
   fill: none;
   stroke: currentColor;
   stroke-width: 2;
@@ -758,18 +764,18 @@ a:hover {
   justify-content: space-between;
 }
 .analytics-value {
-  font-size: 28px;
+  font-size: 20px;
   font-weight: 700;
   color: var(--color-deep-charcoal);
 }
 .analytics-badge {
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 600;
-  padding: 4px 10px;
+  padding: 3px 8px;
   border-radius: var(--radius-button);
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
   white-space: nowrap;
 }
 .analytics-badge.green {
@@ -807,7 +813,7 @@ a:hover {
   align-items: center;
 }
 .leaderboard-title-row h2 {
-  font-size: 24px;
+  font-size: 16px;
   font-weight: 700;
   color: var(--color-deep-charcoal);
 }
@@ -817,15 +823,15 @@ a:hover {
   gap: 8px;
 }
 .sort-text {
-  font-size: 14px;
+  font-size: 12px;
   color: var(--color-muted-graphite);
   font-weight: 500;
 }
 .sort-button {
   border: 1px solid var(--color-light-ash);
   background-color: var(--color-cloud-white);
-  padding: 8px 16px;
-  font-size: 14px;
+  padding: 5px 12px;
+  font-size: 12px;
   font-weight: 500;
   border-radius: var(--radius-button);
   cursor: pointer;
@@ -848,13 +854,13 @@ a:hover {
   text-align: left;
 }
 .data-table th {
-  padding: 16px 18px;
-  font-size: 13px;
-  font-weight: 700;
+  padding: 10px 14px;
+  font-size: 11px;
+  font-weight: 600;
   color: var(--color-muted-graphite);
   border-bottom: 2px solid var(--color-light-ash);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   white-space: nowrap;
 }
 .data-table tbody tr {
@@ -871,10 +877,10 @@ a:hover {
   border-bottom-color: var(--color-active-indigo);
 }
 .data-table td {
-  padding: 18px;
-  font-size: 15px;
+  padding: 12px 14px;
+  font-size: 13px;
   vertical-align: middle;
-  min-height: 76px;
+  min-height: 56px;
   color: var(--color-deep-charcoal);
 }
 
@@ -882,8 +888,8 @@ a:hover {
 .col-rank {
   font-weight: 600;
   color: var(--color-muted-graphite);
-  width: 60px;
-  font-size: 14px;
+  width: 50px;
+  font-size: 13px;
 }
 
 /* Candidate Cell */
@@ -894,8 +900,8 @@ a:hover {
   min-width: 0;
 }
 .candidate-avatar {
-  width: 38px;
-  height: 38px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   overflow: hidden;
   background-color: var(--color-polar-mist);
@@ -916,8 +922,8 @@ a:hover {
   min-width: 0;
 }
 .candidate-name {
-  font-weight: 700;
-  font-size: 16px;
+  font-weight: 600;
+  font-size: 13px;
   color: var(--color-deep-charcoal);
   white-space: nowrap;
   overflow: hidden;
@@ -925,7 +931,7 @@ a:hover {
   cursor: pointer;
 }
 .candidate-role-sub {
-  font-size: 13px;
+  font-size: 11px;
   color: var(--color-muted-graphite);
   white-space: nowrap;
   overflow: hidden;
@@ -957,7 +963,7 @@ a:hover {
   transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .score-text {
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 600;
   color: var(--color-deep-charcoal);
 }
@@ -965,9 +971,9 @@ a:hover {
 /* Badge Styling (Tech Depth & Culture) */
 .tech-badge,
 .culture-badge {
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 600;
-  padding: 6px 12px;
+  padding: 4px 10px;
   border-radius: var(--radius-tag);
   border: 1px solid var(--color-light-ash);
   white-space: nowrap;
@@ -999,11 +1005,11 @@ a:hover {
 
 /* Fit Justification */
 .col-justification {
-  max-width: 260px;
+  max-width: 240px;
   font-style: italic;
   color: var(--color-muted-graphite);
-  line-height: 1.45;
-  font-size: 14px;
+  line-height: 1.4;
+  font-size: 12px;
 }
 
 /* Row Tags */
@@ -1028,8 +1034,8 @@ a:hover {
 
 /* Empty State */
 .leaderboard-empty {
-  padding: 64px 40px;
-  font-size: 16px;
+  padding: 40px 32px;
+  font-size: 13px;
   text-align: center;
   color: var(--color-muted-graphite);
   border: 1px dashed var(--color-light-ash);
@@ -1829,3 +1835,303 @@ a:hover {
   border-top: 1px solid var(--color-light-ash);
   padding-top: 18px;
 }
+
+
+
+
+/* Two-step ScoutMind evaluation dashboard */
+.page-dashboard {
+  --canvas-offset: var(--dock-width);
+}
+.page-dashboard .main-canvas {
+  margin-left: var(--dock-width);
+  width: calc(100vw - var(--dock-width));
+  padding: 22px 30px;
+  gap: 18px;
+  background:
+    linear-gradient(180deg, rgba(248, 250, 252, 0.9), rgba(255, 255, 255, 1) 42%),
+    #ffffff;
+}
+.page-dashboard .top-subnav {
+  padding-bottom: 12px;
+}
+.page-dashboard .evaluation-workflow {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
+  transition: max-width 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.page-dashboard .evaluation-workflow.step-2-active {
+  grid-template-columns: minmax(360px, 1.08fr) minmax(320px, 0.92fr);
+  max-width: 100%;
+}
+.page-dashboard .workflow-card {
+  border: 1px solid #e1e6ef;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.96);
+  padding: 18px;
+  min-height: 238px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: 0 16px 44px rgba(15, 23, 42, 0.06);
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.page-dashboard .workflow-card.step-hidden {
+  display: none !important;
+}
+.page-dashboard .workflow-card.animate-in {
+  animation: slideFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes slideFadeIn {
+  from { opacity: 0; transform: translateX(40px) scale(0.98); }
+  to { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+.page-dashboard .workflow-card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.page-dashboard .workflow-step {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  background: #eef3ff;
+  border: 1px solid #d9e3ff;
+  color: #3158f5;
+  font-size: 13px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+.page-dashboard .workflow-card h2 {
+  margin: 0;
+  color: #111827;
+  font-size: 18px;
+  font-weight: 750;
+  letter-spacing: 0;
+  line-height: 1.2;
+}
+.page-dashboard .workflow-card p {
+  margin: 4px 0 0;
+  color: #667085;
+  font-size: 13px;
+  line-height: 1.45;
+}
+.page-dashboard .job-description-input {
+  flex: 1;
+  min-height: 124px;
+  width: 100%;
+  resize: vertical;
+  border: 1px solid #d8dde8;
+  border-radius: 14px;
+  background: #fbfcff;
+  color: #111827;
+  font-size: 14px;
+  line-height: 1.55;
+  padding: 14px;
+  transition: border-color 0.22s ease, box-shadow 0.22s ease, background-color 0.22s ease;
+}
+.page-dashboard .job-description-input:focus {
+  border-color: #4f6df5;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(79, 109, 245, 0.12);
+}
+.page-dashboard .job-description-input::placeholder {
+  color: #98a2b3;
+}
+.page-dashboard .workflow-actions-new {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: auto;
+}
+.page-dashboard .jd-upload-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.page-dashboard .btn-primary.analyze-btn {
+  width: 100%;
+  padding: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.page-dashboard .btn-primary.analyze-btn.analyzing {
+  background-color: var(--color-active-indigo-l);
+  color: transparent;
+  pointer-events: none;
+}
+.page-dashboard .btn-primary.analyze-btn.analyzing::after {
+  content: "";
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 18px; height: 18px;
+  margin-left: -9px; margin-top: -9px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.page-dashboard .workflow-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.page-dashboard .workflow-status {
+  color: #667085;
+  font-size: 12px;
+  font-weight: 650;
+  text-align: right;
+}
+.page-dashboard .workflow-status.ready {
+  color: #247a52;
+}
+.page-dashboard .jd-upload-action {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+}
+.page-dashboard .upload-zone.workflow-card {
+  align-items: stretch;
+  justify-content: flex-start;
+  text-align: left;
+  border-style: solid;
+  padding: 18px;
+  min-height: 238px;
+  cursor: default;
+  position: relative;
+  overflow: hidden;
+}
+.page-dashboard .upload-zone.workflow-card.drag-over {
+  border-color: #3158f5;
+  background-color: rgba(49, 88, 245, 0.04);
+}
+.page-dashboard .upload-zone.workflow-card.drag-over::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border: 2px dashed #3158f5;
+  border-radius: 16px;
+  animation: pulseBorder 1.5s infinite;
+  pointer-events: none;
+}
+@keyframes pulseBorder {
+  0% { opacity: 0.5; transform: scale(0.995); }
+  50% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0.5; transform: scale(0.995); }
+}
+.page-dashboard .upload-zone.drag-over .upload-icon-container {
+  background-color: #3158f5;
+  color: #fff;
+  transform: translateY(-4px) scale(1.05);
+}
+
+.page-dashboard .upload-icon-container {
+  width: 46px;
+  height: 46px;
+  margin: 2px 0 0;
+  border-radius: 14px;
+  background: #f2f4f7;
+  border: 1px solid #e4e7ec;
+  color: #475467;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.page-dashboard .upload-zone .upload-icon-container svg {
+  width: 24px;
+  height: 24px;
+}
+.page-dashboard .upload-zone .upload-title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: #111827;
+}
+.page-dashboard .upload-zone .upload-caption {
+  margin: -8px 0 0;
+  font-size: 12px;
+}
+.page-dashboard .upload-zone .upload-actions-row {
+  margin-top: auto;
+  justify-content: flex-start;
+}
+.page-dashboard .analytics-matrix {
+  gap: 12px;
+}
+.page-dashboard .analytics-card {
+  padding: 14px 15px;
+  gap: 6px;
+}
+.page-dashboard .leaderboard-container {
+  margin-top: 0;
+}
+.page-dashboard .hidden-results {
+  display: none !important;
+}
+.page-dashboard .fade-in-up {
+  animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Intermediary UX Banner */
+.page-dashboard .evaluation-banner {
+  max-width: 680px;
+  margin: 0 auto 16px;
+  padding: 12px 16px;
+  background: #f8faff;
+  border: 1px solid #d9e3ff;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  opacity: 1;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  box-shadow: 0 4px 12px rgba(49, 88, 245, 0.05);
+}
+.page-dashboard .evaluation-banner.fade-out {
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+}
+.page-dashboard .banner-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #3158f5;
+  font-weight: 500;
+}
+.page-dashboard .banner-progress-bar {
+  height: 4px;
+  background: #e4e7ec;
+  border-radius: 2px;
+  overflow: hidden;
+  width: 100%;
+}
+.page-dashboard .banner-progress-fill {
+  height: 100%;
+  background: #3158f5;
+  width: 0%;
+  transition: width 5s linear;
+}
+
+@media (max-width: 980px) {
+  .page-dashboard .evaluation-workflow {
+    grid-template-columns: 1fr !important;
+  }
+}
+

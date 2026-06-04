@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="TalentMatch AI Recruiter Dashboard — Evaluate, score, and rank candidate pools with AI-powered precision.">
-  <title>TalentMatch AI | Recruiter Dashboard</title>
+  <meta name="description" content="ScoutMind Recruiter Dashboard — Evaluate, score, and rank candidate pools with AI-powered precision.">
+  <title>ScoutMind | Recruiter Dashboard</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
   <link rel="stylesheet" href="/static/styles.css">
 </head>
@@ -15,7 +15,7 @@
     <!-- ═══ TIER 1: GLOBAL UTILITY ICON NAV DOCK ════════════════════════════ -->
     <nav class="global-dock">
       <div class="dock-top">
-        <div class="dock-logo" title="TalentMatch AI">TM</div>
+        <div class="dock-logo" title="ScoutMind">SM</div>
         <div class="dock-items">
           <!-- Dashboard Grid Icon (Active) -->
           <div class="dock-item active" title="Dashboard">
@@ -38,127 +38,7 @@
       <!-- Clean base: no user avatar block -->
     </nav>
 
-    <!-- ═══ TIER 2: HIRING STRATEGY FILTER SIDEBAR ═══════════════════════════ -->
-    <aside class="sidebar-filters">
-      <div class="sidebar-header">
-        <div class="sidebar-title">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-          Hiring Strategy
-        </div>
-        <p class="sidebar-caption">Configure metrics and tech stacks</p>
-      </div>
-
-      <!-- Target Role Engine -->
-      <div class="sidebar-section">
-        <label class="sidebar-label">Target Role</label>
-        <div class="role-select-wrapper">
-          <div class="role-search-wrapper">
-            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            <input type="text" id="roleSearch" placeholder="Type to filter roles..." autocomplete="off">
-          </div>
-          <select class="role-dropdown" id="roleSelect">
-            <!-- Populated via script.js -->
-          </select>
-        </div>
-      </div>
-
-      <!-- Experience Seniority Array -->
-      <div class="sidebar-section">
-        <label class="sidebar-label">Experience Seniority</label>
-        <div class="seniority-array" id="seniorityPills">
-          <button class="seniority-pill" data-level="Junior">Junior</button>
-          <button class="seniority-pill" data-level="Mid">Mid</button>
-          <button class="seniority-pill active" data-level="Senior">Senior</button>
-          <button class="seniority-pill" data-level="Lead">Lead</button>
-        </div>
-      </div>
-
-      <!-- Technical Stack Matrix Accordion -->
-      <div class="sidebar-section">
-        <label class="sidebar-label">Technical Stack Matrix</label>
-        <div class="tech-accordion">
-          
-          <!-- Languages -->
-          <details class="tech-group" open>
-            <summary>Languages</summary>
-            <div class="tech-content">
-              <input type="text" class="tech-micro-search" placeholder="Filter text filter..." data-group="languages">
-              <div class="tech-checklist" data-group="languages">
-                <div class="tech-check-item"><input type="checkbox" id="skill-python" value="Python" checked><label for="skill-python">Python</label></div>
-                <div class="tech-check-item"><input type="checkbox" id="skill-java" value="Java"><label for="skill-java">Java</label></div>
-                <div class="tech-check-item"><input type="checkbox" id="skill-javascript" value="JavaScript"><label for="skill-javascript">JavaScript</label></div>
-                <div class="tech-check-item"><input type="checkbox" id="skill-cpp" value="C++"><label for="skill-cpp">C++</label></div>
-                <div class="tech-check-item"><input type="checkbox" id="skill-go" value="Go"><label for="skill-go">Go</label></div>
-                <div class="tech-check-item"><input type="checkbox" id="skill-rust" value="Rust"><label for="skill-rust">Rust</label></div>
-                <div class="tech-check-item"><input type="checkbox" id="skill-typescript" value="TypeScript"><label for="skill-typescript">TypeScript</label></div>
-              </div>
-            </div>
-          </details>
-
-          <!-- Clouds & Frameworks -->
-          <details class="tech-group">
-            <summary>Clouds &amp; Frameworks</summary>
-            <div class="tech-content">
-              <input type="text" class="tech-micro-search" placeholder="Filter text filter..." data-group="clouds">
-              <div class="tech-checklist" data-group="clouds">
-                <div class="tech-check-item"><input type="checkbox" id="skill-aws" value="AWS" checked><label for="skill-aws">AWS</label></div>
-                <div class="tech-check-item"><input type="checkbox" id="skill-gcp" value="GCP"><label for="skill-gcp">GCP</label></div>
-                <div class="tech-check-item"><input type="checkbox" id="skill-azure" value="Azure"><label for="skill-azure">Azure</label></div>
-                <div class="tech-check-item"><input type="checkbox" id="skill-pytorch" value="PyTorch" checked><label for="skill-pytorch">PyTorch</label></div>
-                <div class="tech-check-item"><input type="checkbox" id="skill-docker" value="Docker" checked><label for="skill-docker">Docker</label></div>
-                <div class="tech-check-item"><input type="checkbox" id="skill-kubernetes" value="Kubernetes"><label for="skill-kubernetes">Kubernetes</label></div>
-                <div class="tech-check-item"><input type="checkbox" id="skill-react" value="React"><label for="skill-react">React</label></div>
-                <div class="tech-check-item"><input type="checkbox" id="skill-nextjs" value="Next.js"><label for="skill-nextjs">Next.js</label></div>
-                <div class="tech-check-item"><input type="checkbox" id="skill-fastapi" value="FastAPI"><label for="skill-fastapi">FastAPI</label></div>
-              </div>
-            </div>
-          </details>
-
-          <!-- Databases & Vectors -->
-          <details class="tech-group">
-            <summary>Databases &amp; Vectors</summary>
-            <div class="tech-content">
-              <input type="text" class="tech-micro-search" placeholder="Filter text filter..." data-group="databases">
-              <div class="tech-checklist" data-group="databases">
-                <div class="tech-check-item"><input type="checkbox" id="skill-postgresql" value="PostgreSQL"><label for="skill-postgresql">PostgreSQL</label></div>
-                <div class="tech-check-item"><input type="checkbox" id="skill-mongodb" value="MongoDB"><label for="skill-mongodb">MongoDB</label></div>
-                <div class="tech-check-item"><input type="checkbox" id="skill-redis" value="Redis"><label for="skill-redis">Redis</label></div>
-                <div class="tech-check-item"><input type="checkbox" id="skill-pinecone" value="Pinecone"><label for="skill-pinecone">Pinecone</label></div>
-                <div class="tech-check-item"><input type="checkbox" id="skill-chromadb" value="ChromaDB"><label for="skill-chromadb">ChromaDB</label></div>
-              </div>
-            </div>
-          </details>
-
-        </div>
-      </div>
-
-      <!-- Engineering Focus -->
-      <div class="sidebar-section">
-        <label class="sidebar-label">Engineering Focus</label>
-        <div class="tech-checklist">
-          <div class="tech-check-item"><input type="checkbox" id="focus-scalability" value="System Scalability" checked><label for="focus-scalability">System Scalability</label></div>
-          <div class="tech-check-item"><input type="checkbox" id="focus-cleancode" value="Clean Code" checked><label for="focus-cleancode">Clean Code</label></div>
-          <div class="tech-check-item"><input type="checkbox" id="focus-cultural" value="Cultural Alignment"><label for="focus-cultural">Cultural Alignment</label></div>
-        </div>
-      </div>
-
-      <!-- Recruiter Red Flags -->
-      <div class="sidebar-section">
-        <label class="sidebar-label">Recruiter Red Flags</label>
-        <div class="tech-checklist">
-          <div class="tech-check-item"><input type="checkbox" id="flag-jobhopping" value="Chronic Job Hopping"><label for="flag-jobhopping">Chronic Job Hopping</label></div>
-          <div class="tech-check-item"><input type="checkbox" id="flag-keywordstuffing" value="Keyword Stuffing"><label for="flag-keywordstuffing">Keyword Stuffing</label></div>
-        </div>
-      </div>
-
-      <!-- Active Filter Tags -->
-      <div class="sidebar-section" style="margin-top: auto; border-top: 1px solid var(--color-light-ash); padding-top: 16px;">
-        <label class="sidebar-label">Active Filters</label>
-        <div class="active-tags-container" id="activeFilters">
-          <!-- Populated by script.js -->
-        </div>
-      </div>
-    </aside>
+    <!-- Layout: icon dock + full-width canvas (no sidebar) -->
 
     <!-- ═══ TIER 3: MAIN WORKSPACE ENGINE CANVAS ═════════════════════════════ -->
     <main class="main-canvas">
@@ -182,26 +62,68 @@
         </div>
       </header>
 
-      <!-- High-Attention Expanded File Dropzone -->
-      <section class="upload-zone" id="uploadZone">
-        <div class="upload-icon-container">
-          <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+      <!-- Two-Step AI Evaluation Workflow -->
+      <section class="evaluation-workflow wizard-mode" id="workflowSection">
+        <div class="workflow-card job-description-card active-step" id="step1Card">
+          <div class="workflow-card-header">
+            <span class="workflow-step">1</span>
+            <div>
+              <h2>Define the Role</h2>
+              <p>Paste text, upload a document, or provide a Google Docs link.</p>
+            </div>
+          </div>
+          <textarea id="jobDescriptionInput" class="job-description-input" placeholder="Paste the job description, role brief, or Google Doc link here..."></textarea>
+          
+          <div class="workflow-actions-new">
+            <div class="jd-upload-wrapper">
+              <label class="btn-outline jd-upload-action" for="jobDescriptionFile">
+                 <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                 Upload File
+              </label>
+              <input type="file" id="jobDescriptionFile" accept=".pdf,.txt,.doc,.docx,.xls,.xlsx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="display: none;">
+              <span class="workflow-status" id="jobDescriptionStatus">Waiting for context</span>
+            </div>
+            <button class="btn-primary analyze-btn" id="analyzeReqBtn">Analyze Requirements</button>
+          </div>
         </div>
-        <h3 class="upload-title">Drag &amp; drop candidate resume PDFs here or click to browse files.</h3>
-        <p class="upload-caption">Supports batch uploads up to 200MB total (PDF, TXT)</p>
-        
-        <input type="file" id="fileInput" multiple accept=".pdf,.txt" style="display: none;">
-        
-        <div class="file-tags-list" id="fileList"></div>
-        
-        <div class="upload-actions-row">
-          <button class="btn-outline" onclick="document.getElementById('fileInput').click()">Browse Files</button>
-          <button class="btn-primary" id="executeBtn">Execute Intelligent Evaluation</button>
+
+        <div class="workflow-card upload-zone step-hidden" id="uploadZone">
+          <div class="workflow-card-header">
+            <span class="workflow-step">2</span>
+            <div>
+              <h2>Upload Candidates</h2>
+              <p>Drop resumes, portfolios, or tracking spreadsheets.</p>
+            </div>
+          </div>
+          <div class="upload-icon-container" id="uploadIconContainer">
+            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+          </div>
+          <h3 class="upload-title">Drag &amp; drop candidate files here</h3>
+          <p class="upload-caption">Supports PDF, Word, Excel, TXT, JSON (up to 200MB)</p>
+
+          <input type="file" id="fileInput" multiple accept=".pdf,.txt,.doc,.docx,.xls,.xlsx,.json,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/json" style="display: none;">
+
+          <div class="file-tags-list" id="fileList"></div>
+
+          <div class="upload-actions-row">
+            <button class="btn-outline" onclick="document.getElementById('fileInput').click()">Browse Files</button>
+            <button class="btn-primary" id="executeBtn">Evaluate Candidates</button>
+          </div>
         </div>
       </section>
+      <!-- Intermediary UX Banner -->
+      <div id="evaluationBanner" class="evaluation-banner hidden-results">
+        <div class="banner-content">
+          <span class="banner-icon">✨</span>
+          <span id="bannerSummaryText" class="banner-summary">Analyzing candidates...</span>
+        </div>
+        <div class="banner-progress-bar">
+          <div id="bannerProgressFill" class="banner-progress-fill"></div>
+        </div>
+      </div>
 
       <!-- Micro-Analytics Metric Card Matrix -->
-      <section class="analytics-matrix">
+      <section class="analytics-matrix hidden-results" id="analyticsMatrix">
         <!-- 1. Processing Power -->
         <div class="analytics-card">
           <span class="analytics-label">
@@ -255,7 +177,7 @@
       </section>
 
       <!-- Live Data Grid Leaderboard -->
-      <section class="leaderboard-container">
+      <section class="leaderboard-container hidden-results" id="leaderboardContainer">
         <div class="leaderboard-title-row">
           <h2>🏆 Live Ranking Leaderboard</h2>
           <div class="leaderboard-sort-bar">
@@ -282,6 +204,37 @@
             <tr>
               <td colspan="7">
                 <div class="leaderboard-empty">No candidates evaluated yet. Please drop resume PDFs above to launch the AI ranking engine.</div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- All Candidates Master View -->
+      <section class="leaderboard-container hidden-results" id="allCandidatesView" style="display: none;">
+        <div class="leaderboard-title-row">
+          <div>
+            <button class="btn-outline" id="backToDashboardBtn" style="margin-bottom: 12px; padding: 6px 12px; font-size: 13px;">
+              ← Back to Dashboard
+            </button>
+            <h2>📋 All Candidates (Unfiltered)</h2>
+          </div>
+        </div>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Candidate Name</th>
+              <th>Current Company/Role</th>
+              <th>Experience Years</th>
+              <th>Overall Match Score</th>
+              <th>Status Tag</th>
+            </tr>
+          </thead>
+          <tbody id="allCandidatesTableBody">
+            <tr>
+              <td colspan="5">
+                <div class="leaderboard-empty">No candidates evaluated yet.</div>
               </td>
             </tr>
           </tbody>
