@@ -722,9 +722,12 @@ if (PAGE.isDashboard) {
       // Store complete unsliced list
       state.allEvaluatedResults = [...allResults];
       
-      // 3. Relative Ranking Fallback
+      // 3. Evaluation Filtering & Relative Ranking Fallback
       let maxScore = allResults[0].score;
-      if (maxScore < 75) {
+      if (maxScore >= 75) {
+        // Enforce strict 70% capability threshold if strong candidates exist
+        allResults = allResults.filter(c => c.score >= 70);
+      } else {
         console.log("Max score is below 75%. Falling back to relative ranking mode.");
         // Take top 10 as relative matches
         allResults = allResults.slice(0, 10);

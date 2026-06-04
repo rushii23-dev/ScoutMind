@@ -3,238 +3,382 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="ScoutMind — Build strategy matrices, upload resumes, and view live candidate rankings with AI-powered precision.">
-  <title>ScoutMind — Premium Recruitment Platform</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
-  <link rel="stylesheet" href="/static/styles.css">
+  <title>ScoutMind | AI Candidate Recovery</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:opsz,wght@9..40,500&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'caldera-bg': '#e2e2df',
+            'caldera-card': '#f7f6f2',
+            'caldera-orange': '#fc5000',
+            'caldera-black': '#111111',
+          },
+          fontFamily: {
+            'display': ['Anton', 'sans-serif'],
+            'body': ['"DM Sans"', 'sans-serif'],
+          },
+          letterSpacing: {
+            'tightest': '0.02em',
+          }
+        }
+      }
+    }
+  </script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    body {
+      background-color: #e2e2df;
+      color: #111111;
+      font-family: "DM Sans", sans-serif;
+      overflow-x: hidden;
+    }
+    
+    .text-display-hero {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(52px, 9vw, 140px);
+      line-height: 0.94;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+    
+    .btn-primary {
+      background-color: #fc5000;
+      color: #f7f6f2;
+      border-radius: 40px;
+      padding: 14px 28px;
+      font-weight: 500;
+      transition: transform 0.1s steps(2);
+      display: inline-block;
+      text-align: center;
+      border: 1px solid transparent;
+    }
+    .btn-primary:hover {
+      border: 2px solid #111111;
+      margin: -1px; /* Prevent layout shift */
+    }
+    .btn-primary:active { transform: translateY(2px); }
+    
+    .btn-ghost {
+      border: 1px solid #111111;
+      color: #111111;
+      border-radius: 40px;
+      padding: 13px 27px;
+      font-weight: 500;
+      transition: transform 0.1s steps(2);
+      display: inline-block;
+      text-align: center;
+    }
+    .btn-ghost:hover {
+      border-width: 2px;
+      margin: -1px;
+    }
+    .btn-ghost:active { transform: translateY(2px); }
 
-    :root {
-      /* Architectural Colors */
-      --color-cloud-white: #ffffff;
-      --color-faint-fog: #f9f9fb;
-      --color-polar-mist: #eff0f6;
-      --color-light-ash: #e5e7eb;
-      --color-graphite: #5f6368;
-      --color-deep-charcoal: #1d1e20;
-      --color-active-indigo: #266df0;
-      
-      /* Precision Typography (Letter Tracking is CRUCIAL) */
-      --font-primary: 'Inter', sans-serif;
-      --text-display: 56px;
-      --leading-display: 1.1;
-      --tracking-display: -0.03em;
-      --text-heading-lg: 32px;
-      --text-body-sm: 15px;
-      --leading-body-sm: 1.6;
-      --tracking-body: -0.01em;
-      
-      /* Shapes & Curves */
-      --page-max-width: 1247px;
-      --radius-buttons: 9999px; /* Perfect Pill */
-      --radius-default: 6.26px;
-      --radius-xl: 12.53px;
-      
-      /* Attio Dynamic Motion Profile (Strict Bezier) */
-      --transition-smooth: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    .nav-pill {
+      border-radius: 800px;
+      background-color: #f7f6f2;
+    }
+    
+    .riso-gradient {
+      background: linear-gradient(135deg, #fc5000 0%, #7c3aed 100%);
+      background-image: radial-gradient(rgba(255,255,255,0.25) 15%, transparent 16%),
+                        radial-gradient(rgba(255,255,255,0.25) 15%, transparent 16%),
+                        linear-gradient(135deg, #fc5000 0%, #7c3aed 100%);
+      background-size: 12px 12px, 12px 12px, 100% 100%;
+      background-position: 0 0, 6px 6px, 0 0;
+    }
+    
+    .border-input {
+      border: 1px solid #111111;
+      transition: border-width 0s steps(1);
+    }
+    .border-input:focus-within, .border-input:hover {
+      border-width: 2px;
+      margin: -1px;
+      outline: none;
+    }
+    
+    /* Remove any default outline for input */
+    input:focus {
+      outline: none;
+    }
+
+    @keyframes marquee {
+      0% { transform: translateX(0%); }
+      100% { transform: translateX(-50%); }
+    }
+    
+    .animate-marquee {
+      display: flex;
+      width: max-content;
+      animation: marquee 15s linear infinite;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .fade-up {
+      animation: fadeUp 0.6s steps(8) forwards;
+      opacity: 0;
+    }
+    .delay-100 { animation-delay: 0.1s; }
+    .delay-200 { animation-delay: 0.2s; }
+
+    /* Nav hover: brutalist snap-up + orange underline */
+    .nav-link-brutal {
+      position: relative;
+      display: inline-block;
+      transition: transform 0s;
+    }
+    .nav-link-brutal::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -3px;
+      width: 100%;
+      height: 2px;
+      background-color: #fc5000;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0s;
+    }
+    .nav-link-brutal:hover {
+      transform: translateY(-2px);
+      color: #fc5000;
+    }
+    .nav-link-brutal:hover::after {
+      transform: scaleX(1);
     }
   </style>
 </head>
-<body class="page-landing">
+<body class="min-h-screen px-4 md:px-7 py-5">
 
-  <!-- ═══ NAVIGATION ═══════════════════════════════════════════════════════ -->
-  <nav class="landing-nav">
-    <div class="landing-nav-inner">
-      <a href="/" class="nav-brand">ScoutMind</a>
-      <div class="nav-links">
-        <a href="#product" class="nav-link">Product</a>
-        <a href="/how-it-works" class="nav-link">How it Works</a>
-        <a href="#pricing-grid" class="nav-link">Pricing</a>
-      </div>
-      <a href="/login" class="btn-primary">Start Evaluation - Free</a>
+  <!-- Navigation Bar -->
+  <nav class="nav-pill w-full max-w-7xl mx-auto flex items-center justify-between px-5 py-3 mb-14 border border-caldera-black/10">
+    <!-- Left -->
+    <div class="flex items-center gap-2">
+      <span class="font-display text-2xl uppercase tracking-tightest leading-none mt-1">ScoutMind</span>
+      <div class="w-2 h-2 rounded-full bg-caldera-orange mt-1"></div>
     </div>
+    
+    <!-- Center -->
+    <div class="hidden lg:flex items-center gap-8 font-medium text-sm uppercase">
+      <a href="#" class="nav-link-brutal">Platform</a>
+      <a href="/static/pricing.html" class="nav-link-brutal">Pricing</a>
+    </div>
+    
+    <!-- Right -->
+    <a href="/static/dashboard.html" class="bg-caldera-orange text-caldera-card px-7 py-2.5 rounded-[800px] text-sm font-medium uppercase active:translate-y-[2px]">
+      Start Sourcing
+    </a>
   </nav>
 
-  <!-- ═══ HERO SECTION ═════════════════════════════════════════════════════ -->
-  <section class="hero-section">
-    <div class="hero-tag">
-      <span>✦</span> ScoutMind for Enterprise
-    </div>
-    <h1 class="hero-headline">Hiring isn't a keyword search. It's a matching framework.</h1>
-    <p class="hero-subtext">A beautifully organized AI talent engine that analyzes technical depth, growth trajectory, and behavioral signals. Experience recruitment with zero visual clutter.</p>
-  </section>
-
-  <!-- ═══ PRODUCT INTERFACE SIMULATION WORKSPACE (1247PX FRAME) ═══════════ -->
-  <section class="demo-section" id="product">
-    <div class="demo-inner">
+  <main class="max-w-7xl mx-auto flex flex-col gap-20">
+    
+    <!-- Hero Section -->
+    <section class="flex flex-col xl:flex-row gap-14 xl:gap-7 items-center fade-up">
+      <!-- Left Column (45%) -->
+      <div class="w-full xl:w-[45%] flex flex-col gap-7">
+        <h1 class="text-display-hero text-caldera-black">
+          High-Fidelity<br>
+          Candidate<br>
+          Recovery.
+        </h1>
+        <p class="text-lg md:text-xl text-caldera-black/80 max-w-lg leading-relaxed font-medium">
+          Bypassing keyword filters to unearth back-end system builders, applied ML engineers, and infrastructure architects with zero framework noise.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-3 mt-3">
+          <a href="/static/dashboard.html" class="btn-primary text-base">Deploy Scout Agent</a>
+          <button class="btn-ghost text-base">Analyze Active Pipeline</button>
+        </div>
+      </div>
       
-      <!-- Left Sidebar Simulator -->
-      <aside class="demo-sidebar">
-        <div class="sidebar-header">
-          <div class="sidebar-title">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 4px;"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
-            Hiring Strategy
-          </div>
-          <p class="sidebar-caption">Interactive simulator demo</p>
-        </div>
-
-        <!-- Target Role -->
-        <div class="sidebar-section">
-          <label class="sidebar-label">Target Role</label>
-          <div class="role-select-wrapper">
-            <div class="role-search-wrapper">
-              <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-              <input type="text" id="demoRoleSearch" placeholder="Type to filter roles..." autocomplete="off">
+      <!-- Right Column (55%) -->
+      <div class="w-full xl:w-[55%] relative">
+        <div class="riso-gradient w-full h-[520px] rounded-[36px] relative overflow-hidden flex items-center justify-center p-5 sm:p-10 border border-caldera-black/10 shadow-none">
+          
+          <!-- Elevated Cream Card (Validation Matrix) -->
+          <div class="bg-caldera-card rounded-[36px] p-7 md:p-8 w-full max-w-lg border border-caldera-black/10 relative z-10 flex flex-col gap-7 transform rotate-[-3deg] hover:rotate-0 transition-transform duration-500">
+            <div class="flex justify-between items-center border-b-2 border-caldera-black/10 pb-6">
+              <span class="font-display text-4xl tracking-tightest uppercase mt-2">Validation Matrix</span>
+              <span class="bg-caldera-orange text-caldera-card px-4 py-2 rounded-[20px] text-sm font-medium tracking-wide">LIVE</span>
             </div>
-            <select class="role-dropdown" id="demoRoleSelect">
-              <!-- Populated via script.js -->
-            </select>
-          </div>
-        </div>
-
-        <!-- Experience Seniority Array -->
-        <div class="sidebar-section">
-          <label class="sidebar-label">Experience Seniority</label>
-          <div class="seniority-array" id="demoSeniorityPills">
-            <button class="seniority-pill" data-level="Junior">Junior</button>
-            <button class="seniority-pill" data-level="Mid">Mid</button>
-            <button class="seniority-pill active" data-level="Senior">Senior</button>
-            <button class="seniority-pill" data-level="Lead">Lead</button>
-          </div>
-        </div>
-
-        <!-- Tech Stack Matrix -->
-        <div class="sidebar-section">
-          <label class="sidebar-label">Technical Stack</label>
-          <div class="active-tags-container">
-            <span class="active-tag">Python <span class="tag-close">&times;</span></span>
-            <span class="active-tag">PyTorch <span class="tag-close">&times;</span></span>
-            <span class="active-tag">AWS <span class="tag-close">&times;</span></span>
-            <span class="active-tag">Docker <span class="tag-close">&times;</span></span>
-          </div>
-        </div>
-      </aside>
-
-      <!-- Right Canvas Simulator -->
-      <main class="demo-canvas">
-        <div class="top-subnav">
-          <div class="subnav-left">
-            <div class="workspace-selector">Acme Engineering</div>
-          </div>
-          <div class="subnav-tabs">
-            <div class="subnav-tab active">Live Ranking Leaderboard</div>
-            <div class="subnav-tab">All Candidates</div>
-          </div>
-        </div>
-
-        <!-- Leaderboard Table -->
-        <div class="leaderboard-container">
-          <div class="leaderboard-title-row">
-            <h2>🏆 Simulated Matches</h2>
-            <div class="leaderboard-sort-bar">
-              <span class="sort-text">Sorted by Score</span>
+            
+            <div class="flex flex-col gap-4">
+              <div class="flex justify-between items-end">
+                <span class="font-medium text-base uppercase text-caldera-black/70">Capability Threshold</span>
+                <span class="font-display text-4xl text-caldera-orange leading-none">> 70%</span>
+              </div>
+              <div class="w-full h-3 bg-caldera-black/10 rounded-full overflow-hidden">
+                <div class="h-full bg-caldera-orange w-[72%]"></div>
+              </div>
+            </div>
+            
+            <div class="flex flex-col gap-4 mt-4">
+              <div class="flex justify-between text-base border-b border-caldera-black/5 pb-2">
+                <span class="font-medium text-caldera-black/80">Deep-Indexing Parameters</span>
+                <span class="font-bold text-caldera-black">Passing</span>
+              </div>
+              <div class="flex justify-between text-base border-b border-caldera-black/5 pb-2">
+                <span class="font-medium text-caldera-black/80">Keyword Trap Evasion</span>
+                <span class="font-bold text-caldera-black">Active</span>
+              </div>
+              <div class="flex justify-between text-base border-b border-caldera-black/5 pb-2">
+                <span class="font-medium text-caldera-black/80">Production Experience Check</span>
+                <span class="font-bold text-caldera-orange">Verified</span>
+              </div>
             </div>
           </div>
-
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th class="col-rank">Rank</th>
-                <th>Candidate</th>
-                <th>Match Score</th>
-                <th>Key Tech Depth</th>
-                <th>Culture Alignment</th>
-                <th>Fit Justification</th>
-                <th>Tags</th>
-              </tr>
-            </thead>
-            <tbody id="demoLeaderboard">
-              <!-- Populated dynamically via script.js -->
-            </tbody>
-          </table>
-        </div>
-      </main>
-
-    </div>
-  </section>
-
-  <!-- ═══ FEATURES GRID SECTION ════════════════════════════════════════════ -->
-  <section class="features-grid-section" id="features">
-    <h2 class="display-title-md" style="text-align: center; margin-bottom: 48px;">An evaluation engine built for clarity.</h2>
-    <div class="features-grid">
-      <!-- Card 1: Instant Talent Discovery -->
-      <div class="feature-card">
-        <div class="feature-icon">
-          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-        </div>
-        <h3 class="feature-title">Instant Talent Discovery</h3>
-        <p class="feature-desc">Find the right fit, faster. Stop manually scrolling PDFs. Drag & drop resumes and instantly unlock deeply structured candidate insights.</p>
-      </div>
-
-      <!-- Card 2: Deep Context Matching -->
-      <div class="feature-card">
-        <div class="feature-icon">
-          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-        </div>
-        <h3 class="feature-title">Deep Context Matching</h3>
-        <p class="feature-desc">Grade skills, not keywords. Our engine analyzes true technical depth, career speed, and soft behavioral signals to surface profiles that actually align with your unique requirements.</p>
-        <div class="feature-visual-tags">
-          <span class="tech-badge exemplary">Python 96%</span>
-          <span class="tech-badge exemplary">PyTorch 98%</span>
+          
         </div>
       </div>
+    </section>
 
-      <!-- Card 3: Collaborative Smart Shortlists -->
-      <div class="feature-card">
-        <div class="feature-icon">
-          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+    <!-- Partner Trust Strip -->
+    <section class="bg-white rounded-[36px] w-full py-7 overflow-hidden border border-caldera-black/10 flex items-center fade-up delay-100 relative">
+      <div class="px-8 md:px-10 font-medium text-caldera-black/40 uppercase text-sm whitespace-nowrap z-10 bg-white">Integrated Systems</div>
+      <div class="w-px h-12 bg-caldera-black/10 z-10 hidden md:block"></div>
+      
+      <div class="flex-1 overflow-hidden relative mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);">
+        <div class="animate-marquee items-center gap-16 px-8">
+          <div class="font-display text-4xl md:text-5xl tracking-tightest text-caldera-black/20 uppercase mt-2">GREENHOUSE</div>
+          <div class="w-px h-8 bg-caldera-black/10"></div>
+          <div class="font-display text-4xl md:text-5xl tracking-tightest text-caldera-black/20 uppercase mt-2">LEVER</div>
+          <div class="w-px h-8 bg-caldera-black/10"></div>
+          <div class="font-display text-4xl md:text-5xl tracking-tightest text-caldera-black/20 uppercase mt-2">WORKDAY</div>
+          <div class="w-px h-8 bg-caldera-black/10"></div>
+          <!-- Duplicated for infinite effect -->
+          <div class="font-display text-4xl md:text-5xl tracking-tightest text-caldera-black/20 uppercase mt-2">GREENHOUSE</div>
+          <div class="w-px h-8 bg-caldera-black/10"></div>
+          <div class="font-display text-4xl md:text-5xl tracking-tightest text-caldera-black/20 uppercase mt-2">LEVER</div>
+          <div class="w-px h-8 bg-caldera-black/10"></div>
+          <div class="font-display text-4xl md:text-5xl tracking-tightest text-caldera-black/20 uppercase mt-2">WORKDAY</div>
         </div>
-        <h3 class="feature-title">Collaborative Smart Shortlists</h3>
-        <p class="feature-desc">Build shortlists, not piles. Prioritize candidates in dynamic leaderboards, add team notes, and make data-backed hiring decisions contextually.</p>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ═══ PRICING GRID ═════════════════════════════════════════════════════ -->
-  <section class="pricing-grid-section" id="pricing-grid">
-    <h2 class="display-title-md" style="text-align: center; margin-bottom: 48px;">Pricing Plans</h2>
-    <div class="pricing-container">
-      <div class="pricing-card">
-        <h4>Hackathon Tier</h4>
-        <p>Unlimited candidates, unlimited clicks, and the developers' silent approval.</p>
-        <div class="pricing-price">$0 / month</div>
-        <a href="/login" class="btn-primary">Get Started</a>
+    <!-- Live Pipeline Simulator Engine -->
+    <section class="flex flex-col items-center gap-10 mb-28 mt-14 px-4 fade-up delay-200" id="simulator">
+      <div class="text-center">
+        <span class="font-medium text-caldera-orange text-sm uppercase tracking-widest">Live Pipeline Simulator Engine</span>
+        <h2 class="font-display text-4xl md:text-6xl tracking-tightest text-center uppercase text-caldera-black leading-none mt-3">
+          High-Fidelity<br>Pipeline Analyzer
+        </h2>
       </div>
-      <div class="pricing-card premium">
-        <h4>GCC Enterprise Tier</h4>
-        <p>All Plan A features, a polished auto-evaluation pipeline, and auto-sends offers to top candidates. (Just kidding. It's Free.)</p>
-        <div class="pricing-price">$0 / month</div>
-        <a href="/login" class="btn-primary">Try Enterprise</a>
+
+      <!-- Input Layer -->
+      <div class="w-full max-w-4xl bg-white rounded-[100px] border-input px-4 md:px-7 py-2.5 md:py-3.5 flex flex-col md:flex-row items-center gap-3 transition-all" id="sim-input-container">
+        <div class="hidden md:flex w-3.5 h-3.5 rounded-full bg-caldera-orange flex-shrink-0"></div>
+        <input type="text" id="sim-role"
+               class="w-full bg-transparent border-none font-medium text-base md:text-lg placeholder-caldera-black/30 text-caldera-black py-3 px-2"
+               placeholder="Enter target role (e.g. Lead Distributed Systems Engineer)...">
+        <button id="btn-simulate" class="w-full md:w-auto bg-caldera-black text-white px-8 py-4 rounded-[800px] font-medium text-base whitespace-nowrap border border-transparent hover:border-caldera-orange hover:border-2 hover:m-[-1px] transition-all" style="transition-timing-function: steps(2);">
+          Simulate Batch
+        </button>
       </div>
-      <div class="pricing-card">
-        <h4>Founder Tier</h4>
-        <p>Complimentary 'founder mindset' behavioral signal boost on GCC shortlists.</p>
-        <div class="pricing-price">Free</div>
-        <a href="/login" class="btn-primary">Start Evaluation</a>
+
+      <!-- Simulator Staging Area (Hidden by default) -->
+      <div id="sim-results" class="w-full max-w-6xl mt-7 hidden flex-col gap-7">
+        <div class="flex items-center justify-between border-b border-caldera-black/10 pb-4">
+          <div class="font-display text-3xl uppercase tracking-tightest">Evaluation Results</div>
+          <div class="text-sm font-medium px-3 py-1 bg-caldera-black/5 rounded-full">100 Profiles Processed in 1.4s</div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-7">
+          <!-- Tier 1 Cards -->
+          <div class="flex flex-col gap-4">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-lg text-caldera-black">Tier 1: High Alignment (>70%)</h3>
+              <span class="bg-caldera-orange text-white px-2 py-0.5 rounded text-xs font-bold">3 MATCHES</span>
+            </div>
+            
+            <!-- Card 1 -->
+            <div class="bg-caldera-card border border-caldera-black/20 p-5 rounded-[18px] hover:border-caldera-orange hover:border-2 transition-all" style="transition-timing-function: steps(1);">
+              <div class="flex justify-between items-start mb-4">
+                <div>
+                  <div class="font-bold text-xl">Elena K.</div>
+                  <div class="text-caldera-black/60 text-sm font-medium">Senior Staff Engineer</div>
+                </div>
+                <div class="font-display text-3xl text-caldera-orange">94%</div>
+              </div>
+              <div class="flex flex-wrap gap-2">
+                <span class="text-xs font-medium border border-caldera-black/10 px-2 py-1 rounded">Distributed Systems</span>
+                <span class="text-xs font-medium border border-caldera-black/10 px-2 py-1 rounded">Go</span>
+                <span class="text-xs font-medium border border-caldera-black/10 px-2 py-1 rounded">Kubernetes</span>
+              </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="bg-caldera-card border border-caldera-black/20 p-5 rounded-[18px] hover:border-caldera-orange hover:border-2 transition-all" style="transition-timing-function: steps(1);">
+              <div class="flex justify-between items-start mb-4">
+                <div>
+                  <div class="font-bold text-xl">Julian D.</div>
+                  <div class="text-caldera-black/60 text-sm font-medium">Platform Architect</div>
+                </div>
+                <div class="font-display text-3xl text-caldera-orange">89%</div>
+              </div>
+              <div class="flex flex-wrap gap-2">
+                <span class="text-xs font-medium border border-caldera-black/10 px-2 py-1 rounded">AWS</span>
+                <span class="text-xs font-medium border border-caldera-black/10 px-2 py-1 rounded">Terraform</span>
+                <span class="text-xs font-medium border border-caldera-black/10 px-2 py-1 rounded">Rust</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tier 2 Cards -->
+          <div class="flex flex-col gap-4 opacity-75">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-lg text-caldera-black/60">Tier 2: Missing Requirements (<70%)</h3>
+              <span class="bg-caldera-black/10 text-caldera-black px-2 py-0.5 rounded text-xs font-bold">97 FILTERED</span>
+            </div>
+            
+            <!-- Card 3 -->
+            <div class="bg-white border border-caldera-black/10 p-5 rounded-[18px] grayscale">
+              <div class="flex justify-between items-start mb-4">
+                <div>
+                  <div class="font-bold text-xl">Sarah M.</div>
+                  <div class="text-caldera-black/60 text-sm font-medium">Backend Developer</div>
+                </div>
+                <div class="font-display text-3xl text-caldera-black/40">62%</div>
+              </div>
+              <div class="text-sm text-caldera-orange font-medium mt-2">
+                Flag: Limited production scale experience.
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ═══ CTA SECTION ══════════════════════════════════════════════════════ -->
-  <section class="cta-section">
-    <div class="cta-inner">
-      <h2 class="display-title-md cta-headline">Try with your own candidates.</h2>
-      <p class="cta-subtext">Upload standard resume PDFs or text profiles, adjust weights in the strategy matrix, and view instant structured evaluations in seconds.</p>
-      <a href="/login" class="btn-primary" style="padding: 12px 24px;">Start Evaluation - Free</a>
-    </div>
-  </section>
+    <!-- Bottom Active CTA -->
+    <section class="w-full bg-caldera-card rounded-[36px] border border-caldera-black/10 py-16 px-8 flex flex-col items-center gap-6 text-center mb-8 fade-up">
+      <h2 class="font-display text-4xl md:text-6xl tracking-tightest uppercase text-caldera-black leading-none">
+        Try Our Service For Free
+      </h2>
+      <p class="text-caldera-black/60 font-medium text-base max-w-md">
+        Evaluate candidates against custom matrices — no credit card, no commitment.
+      </p>
+      <a href="/static/dashboard.html" class="btn-primary text-base mt-2">
+        Go to Dashboard
+      </a>
+    </section>
 
-  <!-- ═══ FOOTER ═══════════════════════════════════════════════════════════ -->
-  <footer class="landing-footer">
-    ScoutMind — Intelligent Recruitment Platform &bull; Flat design inspired by Attio.
-  </footer>
+  </main>
 
-  <script src="/static/script.js"></script>
+  <script>
+    document.getElementById('btn-simulate')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      const results = document.getElementById('sim-results');
+      results.classList.remove('hidden');
+      results.classList.add('flex', 'fade-up');
+    });
+  </script>
 </body>
 </html>

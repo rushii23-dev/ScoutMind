@@ -321,23 +321,67 @@ async def evaluate_candidates(
         if matched_template:
             candidates.append(matched_template)
         else:
-            name_part = (
-                re.sub(r"[_.-]", " ", filename)
-                .replace("resume", "")
-                .replace("pdf", "")
-                .strip()
-                .title()
-            )
-            if not name_part:
-                name_part = "Uploaded Candidate"
-            cand = _generate_random_candidate()
-            cand["name"] = name_part
-            candidates.append(cand)
+            # Smart parsing: Check if the PDF/text contains multiple candidates (e.g. from our sweep)
+            # Regex to match: ID 1 - Rohan Sharma (95%) or similar patterns
+            extracted_cands = []
+            
+            # Pattern 1: Markdown/Text sweep format (e.g. "ID 1 - Rohan Sharma (95%)")
+            pattern = re.compile(r'ID\s+\d+\s+-\s+([A-Za-z\s]+?)\s+\((\d+)%\)')
+            matches = pattern.findall(_parsed_text)
+            
+            # Pattern 2: Fallback for generic name lists in text like "Name: Elena Kozlova"
+            if not matches:
+                pattern2 = re.compile(r'Name:\s*([A-Z][a-zA-Z\s]+)')
+                matches = [(m, random.randint(70, 95)) for m in pattern2.findall(_parsed_text)]
+
+            if matches:
+                # We found multiple candidates inside the single file!
+                for match in matches:
+                    cand_name = match[0].strip()
+                    cand_score = int(match[1]) if str(match[1]).isdigit() else 80
+                    
+                    cand = _generate_random_candidate()
+                    cand["name"] = cand_name
+                    # Try to parse justification if it's there
+                    just_pattern = re.compile(rf'{re.escape(cand_name)}.*?\*Technical Justification:\*\s*(.*?)\n', re.DOTALL | re.IGNORECASE)
+                    j_match = just_pattern.search(_parsed_text)
+                    if j_match:
+                        cand["why_fit_template"] = j_match.group(1).strip()
+                    
+                    # Store their pre-calculated score from the sweep if available to influence backend scoring
+                    cand["pre_calculated_score"] = cand_score
+                    extracted_cands.append(cand)
+            
+            if extracted_cands:
+                candidates.extend(extracted_cands)
+            else:
+                # Fallback to single candidate from filename
+                name_part = (
+                    re.sub(r"[_.-]", " ", filename)
+                    .replace("resume", "")
+                    .replace("pdf", "")
+                    .strip()
+                    .title()
+                )
+                if not name_part:
+                    name_part = "Uploaded Candidate"
+                cand = _generate_random_candidate()
+                cand["name"] = name_part
+                candidates.append(cand)
 
     # ── 2. Score all candidates ───────────────────────────────────────────
     scored: list[dict] = []
     for idx, cand in enumerate(candidates):
-        scored.append(_score_candidate(cand, strategy))
+        c_scored = _score_candidate(cand, strategy)
+        # If we extracted a specific score from the text sweep, respect it!
+        if "pre_calculated_score" in cand:
+            c_scored["score"] = cand["pre_calculated_score"]
+            if c_scored["score"] >= 90:
+                c_scored["tech_depth"] = "Exemplary"
+            elif c_scored["score"] >= 75:
+                c_scored["tech_depth"] = "Strong"
+        scored.append(c_scored)
+        
         if idx % 10 == 0:
             await asyncio.sleep(0)  # Non-blocking yield
 
