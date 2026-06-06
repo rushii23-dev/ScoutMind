@@ -627,8 +627,8 @@ if (PAGE.isDashboard) {
     if (score < 50) culture_fit = "Rejected/Flagged";
 
     return {
-      ...c,
-      title: c.current_company || "Unknown Role",
+      ...cand,
+      title: cand.current_company || "Unknown Role",
       score: score,
       tech_depth: tech_depth,
       culture_fit: culture_fit,
@@ -755,37 +755,6 @@ if (PAGE.isDashboard) {
       
       dom.loadingOverlay.classList.remove('visible');
 
-      // ── 5-Second Intermediary UX Banner ──
-      if (dom.evaluationBanner) {
-        // Extract a short summary from JD
-        let summaryText = state.jobDescription.split('\n')[0].substring(0, 60);
-        if (summaryText.length < 5) summaryText = "Candidates matching the provided criteria";
-        if (dom.bannerSummaryText) {
-          dom.bannerSummaryText.textContent = `Searching for: ${summaryText}...`;
-        }
-
-        // Show banner
-        dom.evaluationBanner.classList.remove('hidden-results');
-        
-        // Trigger progress bar animation
-        requestAnimationFrame(() => {
-          if (dom.bannerProgressFill) {
-            // Need a tiny delay for transition to work if display just changed
-            setTimeout(() => {
-              dom.bannerProgressFill.style.width = '100%';
-            }, 50);
-          }
-        });
-
-        // Wait exactly 5 seconds
-        await new Promise(r => setTimeout(r, 5000));
-
-        // Hide banner
-        dom.evaluationBanner.classList.add('fade-out');
-        await new Promise(r => setTimeout(r, 500)); // wait for fade out
-        dom.evaluationBanner.classList.add('hidden-results');
-      }
-      
       // Reveal metrics and leaderboard
       if (dom.analyticsMatrix && dom.leaderboardContainer) {
         dom.analyticsMatrix.classList.remove('hidden-results');
@@ -907,19 +876,9 @@ if (PAGE.isDashboard) {
         openCandidateDetailsDrawer(cand, avatarUrl);
       });
 
-      // Staggered entry animation
-      tr.style.opacity = '0';
-      tr.style.transform = 'translateY(6px)';
-      tr.style.transition = 'all 0.35s cubic-bezier(0.16, 1, 0.3, 1)';
-
+      tr.style.opacity = '1';
+      tr.style.transform = 'translateY(0)';
       dom.leaderboard.appendChild(tr);
-
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          tr.style.opacity = '1';
-          tr.style.transform = 'translateY(0)';
-        }, Math.min(idx * 30, 600));
-      });
     });
   }
 
