@@ -674,10 +674,26 @@ if (PAGE.isDashboard) {
           
           let candidatesArray = Array.isArray(data) ? data : (data.candidates ? data.candidates : [data]);
           
-          // Basic validation and mapping
+          // Basic validation and mapping — process EVERY candidate
           candidatesArray = candidatesArray
-            .filter(c => c && c.name) // only require name, no hard score/field filters
-            .map(c => c.score !== undefined ? c : scoreCandidate(c, state.jobDescription)); // apply weighted scoring if raw
+            .filter(c => c && c.name) // only require name
+            .map(c => {
+              // If candidate has no score, run full scoring
+              if (c.score === undefined) return scoreCandidate(c, state.jobDescription);
+              
+              // Candidate already has a score but may be missing display fields.
+              // Normalize all required fields so the renderer never crashes.
+              const s = Number(c.score) || 0;
+              return {
+                ...c,
+                score: s,
+                title: c.title || c.current_company || c.role || 'Unknown Role',
+                tech_depth: c.tech_depth || (s >= 75 ? 'Strong' : s >= 50 ? 'Average' : 'Weak'),
+                culture_fit: c.culture_fit || (s >= 75 ? 'High Alignment' : s >= 50 ? 'Medium Alignment' : 'Rejected/Flagged'),
+                why_fit: c.why_fit || c.summary || 'Scored via pre-calculated match.',
+                skills: c.skills || [],
+              };
+            });
             
           allResults = allResults.concat(candidatesArray);
         }
@@ -722,15 +738,14 @@ if (PAGE.isDashboard) {
       // Store complete unsliced list
       state.allEvaluatedResults = [...allResults];
       
-      // 3. Evaluation Filtering & Relative Ranking Fallback
-      let maxScore = allResults[0].score;
-      if (maxScore >= 75) {
-        // Enforce strict 70% capability threshold if strong candidates exist
-        allResults = allResults.filter(c => c.score >= 70);
+      // 3. Inclusive Batch Filtering — return EVERY candidate >= 70%
+      const qualified = allResults.filter(c => c.score >= 70);
+      if (qualified.length > 0) {
+        allResults = qualified;
+        console.log(`Batch filter: ${qualified.length} candidate(s) passed the 70% threshold.`);
       } else {
-        console.log("Max score is below 75%. Falling back to relative ranking mode.");
-        // Take top 10 as relative matches
-        allResults = allResults.slice(0, 10);
+        // No one hit 70% — show ALL results as relative ranking (no cap)
+        console.log("No candidates reached 70%. Showing full relative ranking.");
       }
 
       const elapsed = ((performance.now() - startTime) / 1000).toFixed(1);
@@ -827,9 +842,9 @@ if (PAGE.isDashboard) {
       tr.dataset.idx = idx;
       tr.style.cursor = 'pointer';
 
-      // Badge CSS class derivation
-      const tdClass = cand.tech_depth.toLowerCase();
-      const cfClass = cand.culture_fit.toLowerCase().replace(/\s/g, '').replace('/', '');
+      // Badge CSS class derivation (defensive: never crash on missing fields)
+      const tdClass = (cand.tech_depth || 'average').toLowerCase();
+      const cfClass = (cand.culture_fit || 'medium alignment').toLowerCase().replace(/\s/g, '').replace('/', '');
 
       // Avatar selection by name heuristic
       let avatarUrl = 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=100';
