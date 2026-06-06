@@ -627,8 +627,8 @@ if (PAGE.isDashboard) {
     if (score < 50) culture_fit = "Rejected/Flagged";
 
     return {
-      ...cand,
-      title: cand.current_company || "Unknown Role",
+      ...c,
+      title: c.current_company || "Unknown Role",
       score: score,
       tech_depth: tech_depth,
       culture_fit: culture_fit,
